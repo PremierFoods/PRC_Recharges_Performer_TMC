@@ -1,0 +1,134 @@
+{
+  "Workflows": [
+    {
+      "Path": null,
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": null,
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Main.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "TransactionItem&StateMachine_1",
+        "SystemException&StateMachine_1",
+        "BusinessException&StateMachine_1",
+        "TransactionNumber&StateMachine_1",
+        "Config&StateMachine_1",
+        "RetryNumber&StateMachine_1",
+        "TransactionField2&StateMachine_1",
+        "TransactionField1&StateMachine_1",
+        "TransactionID&StateMachine_1",
+        "dt_TransactionData&StateMachine_1",
+        "ConsecutiveSystemExceptions&StateMachine_1",
+        "ShouldStop&Sequence_25"
+      ],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Tests/WorkflowTestCaseTemplate.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "listUniqueFee&Sequence_3",
+        "dtInvoiceFilteredOnFee&Sequence_3",
+        "listOccurringFee&Sequence_3",
+        "Config&Sequence_1",
+        "strInvoice&Sequence_3",
+        "dictInvoice&Sequence_3",
+        "dtInvoice&Sequence_3"
+      ],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.1 Read Invoice PDF.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "strInvoice&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "out_dtInvoice",
+        "in_strPDFInvoice",
+        "in_Config"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Framework/Process.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "listUniqueFee&Sequence_1",
+        "dtInvoiceFilteredOnFee&Sequence_1",
+        "listOccurringFee&Sequence_1",
+        "dtInvoice&Sequence_1",
+        "dtPivotTable&Sequence_1",
+        "strPeriod&Sequence_1",
+        "dtDataForJournal&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_TransactionItem",
+        "in_Config"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.2 Identify Description For Occurring Fee.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dtModifiedFee&Sequence_1",
+        "dtPivotDataOutput&Sequence_1",
+        "dtInvoiceData&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_dtInvoiceFilteredOnFee",
+        "in_strOccurringFee",
+        "in_strInvoiceFilePath",
+        "in_Config"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.2 Create Active List.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "strSubProcessName&Sequence_1",
+        "dtActiveList&Sequence_1",
+        "dtUnprocessedActiveList&Sequence_1",
+        "intRowIndex&Sequence_1",
+        "rowData&Sequence_1",
+        "strSheetName&Sequence_5",
+        "strSheetName&Sequence_3"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_Config",
+        "in_strTemplatePath",
+        "in_strActiveListFile"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.3 Create Other Description Tabs.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dtInvoiceData&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_strUniqueFee",
+        "in_Config",
+        "in_strInvoiceFilePath",
+        "in_dtInvoiceFilteredOnFee"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    }
+  ]
+}

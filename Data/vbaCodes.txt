@@ -1,0 +1,100 @@
+Sub CreateAndFormatPivotTable(worksheet as string)
+    Dim wsData As Worksheet
+    Dim wsPivot As Worksheet
+    Dim wsOutput As Worksheet
+    Dim pvtCache As PivotCache
+    Dim pvtTable As PivotTable
+    Dim pvtRange As Range
+    Dim destRange As Range
+    Dim lastRow As Long
+    Dim lastCol As Long
+    
+    ' Set references to the relevant worksheets
+    Set wsData = ThisWorkbook.Sheets(worksheet) ' Change "Data" to your data sheet's name
+    Set wsPivot = ThisWorkbook.Sheets.Add ' Create a new sheet for the pivot table
+    wsPivot.Name = "PivotTable"
+    
+    ' Find the last row and column of the data
+    lastRow = wsData.Cells(wsData.Rows.Count, 1).End(xlUp).Row
+    lastCol = wsData.Cells(1, wsData.Columns.Count).End(xlToLeft).Column
+    
+    ' Convert Fee column to numeric values
+    For i = 2 To lastRow ' Assuming the first row contains headers
+        If IsNumeric(wsData.Cells(i, 8).Value) Then
+            wsData.Cells(i, 8).Value = CDbl(wsData.Cells(i, 8).Value) ' Column 8 is the "Fee" column
+        Else
+            wsData.Cells(i, 8).Value = 0 ' Handle non-numeric values by setting them to 0 (or other handling)
+        End If
+    Next i
+
+    ' Define the data range for the PivotTable
+    Set pvtRange = wsData.Cells(1, 1).Resize(lastRow, lastCol)
+    
+    ' Create a PivotCache
+    Set pvtCache = ThisWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=pvtRange)
+    
+    ' Create the PivotTable
+    Set pvtTable = pvtCache.CreatePivotTable(TableDestination:=wsPivot.Cells(1, 1), TableName:="MyPivotTable")
+    
+    ' Apply Classic PivotTable Layout
+    pvtTable.InGridDropZones = True
+    pvtTable.RowAxisLayout xlTabularRow
+    
+    ' Add fields to the PivotTable
+    With pvtTable
+        .PivotFields("First Name").Orientation = xlRowField
+        .PivotFields("Last Name").Orientation = xlRowField
+        .PivotFields("Employee ID").Orientation = xlRowField
+        .PivotFields("Parent Name").Orientation = xlRowField
+        .PivotFields("Scheme Name").Orientation = xlRowField
+        .PivotFields("Registration No").Orientation = xlRowField
+        .PivotFields("Cost Centre").Orientation = xlRowField
+
+	' Set "Fee" as a Data Field and apply "Sum of Fee"
+        .AddDataField .PivotFields("Fee"), "Sum of Fee", xlSum
+    End With
+    
+    ' Remove Subtotals
+    With pvtTable.PivotFields("Employee ID")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    With pvtTable.PivotFields("Cost Centre")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    With pvtTable.PivotFields("First Name")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    With pvtTable.PivotFields("Last Name")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    With pvtTable.PivotFields("Parent Name")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    With pvtTable.PivotFields("Scheme Name")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    With pvtTable.PivotFields("Registration No")
+        .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, False, False)
+    End With
+    
+    ' Repeat All Item Labels
+    pvtTable.RepeatAllLabels xlRepeatLabels
+    
+    ' Copy PivotTable data without totals to a new sheet
+    Set wsOutput = ThisWorkbook.Sheets.Add
+    wsOutput.Name = "PivotDataOutput"
+    
+    ' Get the range of the PivotTable excluding the first row
+    Set destRange = wsPivot.PivotTables("MyPivotTable").TableRange1
+    destRange.Offset(1, 0).Resize(destRange.Rows.Count - 1).Copy ' Skip the first row (headers)
+    wsOutput.Cells(1, 1).PasteSpecial Paste:=xlPasteValues 
+
+    ' Remove totals from the output sheet (assuming total is in the last row)
+    lastRow = wsOutput.Cells(wsOutput.Rows.Count, 1).End(xlUp).Row
+    If wsOutput.Cells(lastRow, 1).Value = "Grand Total" Then
+        wsOutput.Rows(lastRow).Delete
+    End If
+    
+    ' Clean up
+    Application.CutCopyMode = False
+End Sub
