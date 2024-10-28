@@ -33,6 +33,7 @@
       "Path": "Tests/WorkflowTestCaseTemplate.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "strMaxQtyDescription&Sequence_3",
         "listUniqueFee&Sequence_3",
         "dtInvoiceFilteredOnFee&Sequence_3",
         "listOccurringFee&Sequence_3",
@@ -52,6 +53,7 @@
         "strInvoice&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
+        "out_strMaxQtyDescription",
         "out_dtInvoice",
         "in_strPDFInvoice",
         "in_Config"
@@ -96,7 +98,7 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "SubProcesses/Recharges - 3.2 Create Active List.xaml",
+      "Path": "SubProcesses/Recharges - 3.4 Create Active List.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
         "strSubProcessName&Sequence_1",
@@ -126,6 +128,40 @@
         "in_Config",
         "in_strInvoiceFilePath",
         "in_dtInvoiceFilteredOnFee"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.5 Add Invoice Data to Template.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dtDescriptionSheet&Sequence_1",
+        "dtActiveList&Sequence_1",
+        "dtInvoiceData&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_strTemplatePath",
+        "in_strMaxQtyDescription",
+        "in_Config",
+        "in_strInvoiceFilePath"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.6 Identify Cost Center.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dtInvoiceData&Sequence_1",
+        "dtActiveList&Sequence_1",
+        "dtMissingCC&Sequence_1",
+        "strMailBody&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_Config",
+        "in_strInvoiceFilePath",
+        "in_strTemplatePath"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null

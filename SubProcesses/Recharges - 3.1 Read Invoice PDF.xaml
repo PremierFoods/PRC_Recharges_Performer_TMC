@@ -3,11 +3,12 @@
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_strPDFInvoice" Type="InArgument(x:String)" />
     <x:Property Name="out_dtInvoice" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_strMaxQtyDescription" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1055.2,706.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>893.6,706.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AfterResume_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -147,7 +148,7 @@
       <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - Copy Data In Template" sap:VirtualizedContainerService.HintSize="449.6,531.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - 3.1 Read Invoice PDF" sap:VirtualizedContainerService.HintSize="449.6,531.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="strInvoice" />
     </Sequence.Variables>
@@ -159,7 +160,7 @@
     </sap:WorkflowViewStateService.ViewState>
     <ui:ReadPDFText PreserveFormatting="{x:Null}" DisplayName="Read PDF Text" FileName="[in_strPDFInvoice]" sap:VirtualizedContainerService.HintSize="387.2,83.2" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[strInvoice]" />
     <ui:BuildDataTable DataTable="[out_dtInvoice]" DisplayName="Create Invoice Table" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Quantity&quot; msdata:Caption=&quot;&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Description&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Unit_x0020_Price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Disc_x0020_Amt&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Net_x0020_Amt&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VAT_x0020__x0025_&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VAT&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
-    <ui:InvokeCode ContinueOnError="{x:Null}" Code="'Add values to datatable&#xA;For Each description As String In in_listOfDescriptions&#xA;&#x9;console.WriteLine(&quot;Description &quot;+description)&#xA;&#x9;Dim strPattern As String = &quot;.*&quot;+description+&quot;.*&quot; &#xA;&#x9;'Dim strExtractQuantity As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,&quot;^(?:.*?)&quot;+description).Value&#xA;&#x9;'console.WriteLine(&quot;Quantity &quot;+strExtractQuantity)&#xA;&#x9;Dim strExtractOtherFields As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,strPattern).Value.Replace(description,&quot;&quot;).replace(&quot;  &quot;,&quot; &quot;)&#xA;&#x9;console.WriteLine(&quot;Other fields &quot;+strExtractOtherFields)&#xA; &#x9;io_dtInvoice.Rows.Add({Split(strExtractOtherFields, &quot; &quot;)(0),description,Split(strExtractOtherFields, &quot; &quot;)(1),Split(strExtractOtherFields, &quot; &quot;)(2),Split(strExtractOtherFields, &quot; &quot;)(3).Replace(&quot;,&quot;,&quot;&quot;),Split(strExtractOtherFields, &quot; &quot;)(4),Split(strExtractOtherFields, &quot; &quot;)(5)})&#xA;Next&#xA;&#x9;&#x9;&#xA;" DisplayName="Extract table values from invoice and add to datatable" sap:VirtualizedContainerService.HintSize="387.2,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="'Add values to datatable&#xD;&#xA;For Each description As String In in_listOfDescriptions&#xD;&#xA;&#x9;console.WriteLine(&quot;Description &quot;+description)&#xD;&#xA;&#x9;Dim strPattern As String = &quot;.*&quot;+description+&quot;.*&quot; &#xD;&#xA;&#x9;'Dim strExtractQuantity As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,&quot;^(?:.*?)&quot;+description).Value&#xD;&#xA;&#x9;'console.WriteLine(&quot;Quantity &quot;+strExtractQuantity)&#xD;&#xA;&#x9;Dim strExtractOtherFields As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,strPattern).Value.Replace(description,&quot;&quot;).replace(&quot;  &quot;,&quot; &quot;)&#xD;&#xA;&#x9;console.WriteLine(&quot;Other fields &quot;+strExtractOtherFields)&#xD;&#xA; &#x9;io_dtInvoice.Rows.Add({Split(strExtractOtherFields, &quot; &quot;)(0),description,Split(strExtractOtherFields, &quot; &quot;)(1),Split(strExtractOtherFields, &quot; &quot;)(2),Split(strExtractOtherFields, &quot; &quot;)(3).Replace(&quot;,&quot;,&quot;&quot;),Split(strExtractOtherFields, &quot; &quot;)(4),Split(strExtractOtherFields, &quot; &quot;)(5)})&#xD;&#xA;Next&#xD;&#xA;Dim strMaxQuantity As String = io_dtInvoice.AsEnumerable.Max(Function(r) Int32.Parse(r(&quot;Quantity&quot;).ToString)).ToString&#xD;&#xA;out_strMaxQtyDesctiption = io_dtInvoice.AsEnumerable.Where(Function(x) x(&quot;Quantity&quot;).ToString = strMaxQuantity).CopyToDataTable.Rows(0)(&quot;Description&quot;).ToString" DisplayName="Extract table values from invoice and add to datatable" sap:VirtualizedContainerService.HintSize="387.2,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
       <ui:InvokeCode.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_strInvoice">
           <VisualBasicValue x:TypeArguments="x:String" ExpressionText="strInvoice" />
@@ -170,6 +171,9 @@
         <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoice">
           <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="out_dtInvoice" />
         </InOutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_strMaxQtyDesctiption">
+          <VisualBasicReference x:TypeArguments="x:String" ExpressionText="out_strMaxQtyDescription" />
+        </OutArgument>
       </ui:InvokeCode.Arguments>
     </ui:InvokeCode>
   </Sequence>

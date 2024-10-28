@@ -7,7 +7,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1054.4,1989.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1410.4,1989.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AfterResume_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -147,7 +147,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - Identify Cost Center" sap:VirtualizedContainerService.HintSize="572.8,1924.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="sd:DataTable" Name="dtWorkings" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtInvoiceData" />
       <Variable x:TypeArguments="sd:DataTable" Name="dtActiveList" />
       <Variable x:TypeArguments="sd:DataTable" Name="dtMissingCC" />
       <Variable x:TypeArguments="x:String" Name="strMailBody" />
@@ -158,7 +158,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Vodafone Usage" sap:VirtualizedContainerService.HintSize="510.4,381.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - TMC" sap:VirtualizedContainerService.HintSize="510.4,381.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
@@ -170,14 +170,14 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtWorkings]" DisplayName="Read Range - Workings" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_4" Range="[in_Config(&quot;VodafoneWorkingsReadRange&quot;).ToString]" SheetName="[in_Config(&quot;VodafoneWorkingsSheetName&quot;).ToString]">
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Read Range - Inv" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_4" Range="[in_Config(&quot;InvRange&quot;).ToString]" SheetName="[in_Config(&quot;InvSheetName&quot;).ToString]">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:ExcelReadRange>
-            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtActiveList]" DisplayName="Read Range - Active List" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_5" Range="[in_Config(&quot;VodafoneActiveListReadRange&quot;).ToString]" SheetName="[in_Config(&quot;VodafoneActiveListSheetName&quot;).ToString]">
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtActiveList]" DisplayName="Read Range - Active List" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_5" Range="[in_Config(&quot;ActiveListReadRange&quot;).ToString]" SheetName="[in_Config(&quot;ActiveListSheetName&quot;).ToString]">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -193,10 +193,14 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ExcelApplicationScope>
-    <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row As datarow In io_dtWorkings.Rows&#xD;&#xA;console.WriteLine(&quot;index &quot;+io_dtWorkings.Rows.IndexOf(row).ToString)&#xD;&#xA;If io_dtWorkings.Rows.IndexOf(row) = 0 And String.IsNullOrWhiteSpace(row(&quot;Allocation Code 2&quot;).tostring)&#xD;&#xA;&#x9;console.WriteLine(&quot;can't extract CC and Name.&quot;)&#xD;&#xA;&#x9;row(&quot;CC comments&quot;) = &quot;The robot can't extract cost center and name due to missing data.&quot;&#xD;&#xA;Else&#xD;&#xA;&#x9;If Not String.IsNullOrWhiteSpace(row(&quot;Allocation Code 2&quot;).tostring) And Not row(&quot;Allocation Code 2&quot;).tostring = &quot;0&quot;&#xD;&#xA;&#x9;&#x9;console.WriteLine(&quot;pers no &quot;+ row(&quot;Allocation Code 2&quot;).tostring)&#xD;&#xA;&#x9;&#x9;If in_dtActiveList.AsEnumerable.Any(Function(x) x(&quot;Pers.No.&quot;).ToString.ToLower.Trim = row(&quot;Allocation Code 2&quot;).ToString.ToLower.Trim)&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC identified&quot;) = in_dtActiveList.AsEnumerable.Where(Function(x) x(&quot;Pers.No.&quot;).ToString.tolower.Trim = row(&quot;Allocation Code 2&quot;).ToString.ToLower.Trim).CopyToDataTable.Rows.Item(0)(&quot;CC to use for recharge&quot;).ToString&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;Name identified&quot;) = in_dtActiveList.AsEnumerable.Where(Function(x) x(&quot;Pers.No.&quot;).ToString.tolower.Trim = row(&quot;Allocation Code 2&quot;).ToString.ToLower.Trim).CopyToDataTable.Rows.Item(0)(&quot;Personnel Number&quot;).ToString&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = If(Not String.IsNullOrWhiteSpace(row(&quot;CC identified&quot;).ToString),&quot;Value in column K is &quot;+row(&quot;Allocation Code 2&quot;).tostring+&quot;. The robot was able to find the Pers.No. in column A, from the Active List, and returned the Cost Center from column H, from the Active List: &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;,&quot;&quot;)&#xD;&#xA;&#x9;&#x9;Else&#xD;&#xA;&#x9;&#x9;&#x9;console.WriteLine( &quot;The robot copied the cost center from column I: &quot;+row(&quot;Allocation Code 1/ CC&quot;).ToString+&quot;.&quot;)&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC identified&quot;) = row(&quot;Allocation Code 1/ CC&quot;).ToString&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;Name identified&quot;) = row(&quot;Handset Reference&quot;).ToString&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot copied the cost center from column I: &quot;+row(&quot;Allocation Code 1/ CC&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;&#x9;End If&#xD;&#xA;&#x9;Else If String.IsNullOrWhiteSpace(row(&quot;Allocation Code 2&quot;).tostring)&#xD;&#xA;&#x9;&#x9;console.WriteLine( &quot;The robot copied the cost center from column I from the row above: &quot;+io_dtWorkings.Rows(io_dtWorkings.Rows.IndexOf(row)-1)(&quot;Allocation Code 1/ CC&quot;).ToString+&quot;.&quot;)&#xD;&#xA;&#x9;&#x9;row(&quot;CC identified&quot;) = io_dtWorkings.Rows(io_dtWorkings.Rows.IndexOf(row)-1)(&quot;CC identified&quot;).ToString&#xD;&#xA;&#x9;&#x9;row(&quot;Name identified&quot;) = io_dtWorkings.Rows(io_dtWorkings.Rows.IndexOf(row)-1)(&quot;Name identified&quot;).ToString&#xD;&#xA;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot copied the cost center from column I from the row above: &quot;+If(String.IsNullOrWhiteSpace(io_dtWorkings.Rows(io_dtWorkings.Rows.IndexOf(row)-1)(&quot;Allocation Code 1/ CC&quot;).ToString),io_dtWorkings.Rows(io_dtWorkings.Rows.IndexOf(row)-1)(&quot;CC identified&quot;).ToString,io_dtWorkings.Rows(io_dtWorkings.Rows.IndexOf(row)-1)(&quot;Allocation Code 1/ CC&quot;).ToString)+&quot;.&quot;&#xD;&#xA;&#x9;End If&#xD;&#xA;End If&#xD;&#xA;If Not String.IsNullOrWhiteSpace(row(&quot;CC identified&quot;).ToString)&#xD;&#xA;&#x9;Select Case row(&quot;CC identified&quot;).ToString.Substring(0, 2)&#xD;&#xA;&#x9;&#x9;Case &quot;16&quot;&#xD;&#xA;       &#x9;&#x9;row(&quot;CC identified&quot;) = &quot;160200&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;   &#x9;&#x9;Case &quot;17&quot;&#xD;&#xA;       &#x9;&#x9;row(&quot;CC identified&quot;) = &quot;170200&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;   &#x9;&#x9;Case &quot;H1&quot;&#xD;&#xA;       &#x9;&#x9;row(&quot;CC identified&quot;) = &quot;H10000&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;    &#x9;Case &quot;H2&quot;&#xD;&#xA;        &#x9;row(&quot;CC identified&quot;) = &quot;H20100&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;H3&quot;&#xD;&#xA;       &#x9;&#x9;row(&quot;CC identified&quot;) = &quot;H30100&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;G1&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC identified&quot;) = &quot;G10200&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;&#x9;Case Else&#xD;&#xA;&#x9;&#x9;&#x9;'row(&quot;CC identified&quot;) = row(&quot;Allocation Code 1/ CC&quot;)&#xD;&#xA;&#x9;&#x9;&#x9;'row(&quot;CC comments&quot;) = &quot;The robot copied the cost center from column I: &quot;+row(&quot;Allocation Code 1/ CC&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;End Select&#xD;&#xA;&#xD;&#xA;&#x9;Select Case row(&quot;CC identified&quot;).ToString&#xD;&#xA;    &#x9;Case &quot;990244&quot;&#xD;&#xA;        &#x9;row(&quot;CC identified&quot;) = &quot;990003&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;    &#x9;Case &quot;990010&quot;&#xD;&#xA;         &#x9;row(&quot;CC identified&quot;) = &quot;990210&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;    &#x9;Case &quot;990098&quot;&#xD;&#xA;        &#x9;row(&quot;CC identified&quot;) = &quot;990011&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;    &#x9;Case &quot;990051&quot;&#xD;&#xA;        &#x9;row(&quot;CC identified&quot;) = &quot;990077&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;181070&quot;&#xD;&#xA;         &#x9;row(&quot;CC identified&quot;) = &quot;180211&quot;&#xD;&#xA;&#x9;&#x9;&#x9;row(&quot;CC comments&quot;) = &quot;The robot replaced the cost center to &quot;+row(&quot;CC identified&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;&#x9;Case Else&#xD;&#xA;&#x9;&#x9;&#x9;'row(&quot;CC identified&quot;) = row(&quot;Allocation Code 1/ CC&quot;)&#xD;&#xA;&#x9;&#x9;&#x9;'row(&quot;CC comments&quot;) = &quot;The robot copied the cost center from column I: &quot;+row(&quot;Allocation Code 1/ CC&quot;).ToString+&quot;.&quot;&#xD;&#xA;&#x9;End Select&#xD;&#xA;End If&#xD;&#xA;&#xD;&#xA;Next&#xD;&#xA;" DisplayName="Populate CC identified, Name identified and CC comments" sap:VirtualizedContainerService.HintSize="510.4,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row As datarow In io_dtInvoiceData.Rows&#xD;&#xA;If row(&quot;CostCentre&quot;).tostring = &quot;(blank)&quot;&#xD;&#xA;&#x9;If in_dtActiveList.AsEnumerable.Any(Function(x) x(&quot;Personnel Number&quot;).ToString.ToLower.Trim = row(&quot;FirstName&quot;).ToString.ToLower.Trim+&quot; &quot;+row(&quot;LastName&quot;).ToString.ToLower.Trim)&#xD;&#xA;&#x9;&#x9;row(&quot;CostCentre&quot;) = in_dtActiveList.AsEnumerable.Where(Function(x)  x(&quot;Personnel Number&quot;).ToString.ToLower.Trim = row(&quot;FirstName&quot;).ToString.ToLower.Trim+&quot; &quot;+row(&quot;LastName&quot;).ToString.ToLower.Trim).CopyToDataTable.Rows.Item(0)(&quot;CC to use for recharge&quot;).ToString&#xD;&#xA;&#x9;End If&#xD;&#xA;End If&#xD;&#xA;If row(&quot;CostCentre&quot;).ToString &lt;&gt; &quot;(blank)&quot;&#xD;&#xA;&#x9;Select Case row(&quot;CostCentre&quot;).ToString&#xD;&#xA;    &#x9;Case &quot;990244&quot;&#xD;&#xA;        &#x9;row(&quot;CostCentre&quot;) = &quot;990003&quot;&#xD;&#xA;    &#x9;Case &quot;990010&quot;&#xD;&#xA;         &#x9;row(&quot;CostCentre&quot;) = &quot;990210&quot;&#xD;&#xA;    &#x9;Case &quot;990030&quot;&#xD;&#xA;        &#x9;row(&quot;CostCentre&quot;) = &quot;990003&quot;&#xD;&#xA;    &#x9;Case &quot;A16000&quot;&#xD;&#xA;        &#x9;row(&quot;CostCentre&quot;) = &quot;990061&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;277055&quot;&#xD;&#xA;         &#x9;row(&quot;CostCentre&quot;) = &quot;277005&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;H16010&quot;&#xD;&#xA;         &#x9;row(&quot;CostCentre&quot;) = &quot;H10610&quot;&#xD;&#xA;&#x9;End Select&#x9;&#xD;&#xA;End If&#xD;&#xA;Next&#xD;&#xA;" DisplayName="Populate CC identified, Name identified and CC comments" sap:VirtualizedContainerService.HintSize="510.4,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
       <ui:InvokeCode.Arguments>
-        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtWorkings">[dtWorkings]</InOutArgument>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtActiveList">[dtActiveList]</InArgument>
+        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoiceData">
+          <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dtInvoiceData" />
+        </InOutArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtActiveList">
+          <VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtActiveList" />
+        </InArgument>
       </ui:InvokeCode.Arguments>
     </ui:InvokeCode>
     <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Data Received" sap:VirtualizedContainerService.HintSize="510.4,309.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_4" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
@@ -211,7 +215,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtWorkings.DefaultView.ToTable(False, &quot;CC Identified&quot;, &quot;Name identified&quot;, &quot;CC Comments&quot;)]" DisplayName="Write Range - Columns S, T and U" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="[in_Config(&quot;VodafoneWorkingsSheetName&quot;).ToString]" StartingCell="[in_Config(&quot;VodafoneWorkingsCostCenterRange&quot;).ToString]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtInvoiceData.DefaultView.ToTable(False, &quot;CC Identified&quot;, &quot;Name identified&quot;, &quot;CC Comments&quot;)]" DisplayName="Write Range - Columns S, T and U" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="[in_Config(&quot;InvSheetName&quot;).ToString]" StartingCell="[in_Config(&quot;VodafoneWorkingsCostCenterRange&quot;).ToString]" />
           </Sequence>
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
@@ -221,7 +225,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ExcelApplicationScope>
-    <If Condition="[dtWorkings.AsEnumerable().Any(Function(row) String.IsNullOrWhiteSpace(row(&quot;CC identified&quot;).ToString()) AndAlso Not String.IsNullOrEmpty(row(&quot;Handset Reference&quot;).ToString())) = true]" DisplayName="If Missing CCs found" sap:VirtualizedContainerService.HintSize="510.4,712.8" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[dtInvoiceData.AsEnumerable().Any(Function(row) String.IsNullOrWhiteSpace(row(&quot;CC identified&quot;).ToString()) AndAlso Not String.IsNullOrEmpty(row(&quot;Handset Reference&quot;).ToString())) = true]" DisplayName="If Missing CCs found" sap:VirtualizedContainerService.HintSize="510.4,712.8" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence sap:VirtualizedContainerService.HintSize="476.8,529.6" sap2010:WorkflowViewState.IdRef="Sequence_8">
           <sap:WorkflowViewStateService.ViewState>
@@ -234,7 +238,7 @@
               <OutArgument x:TypeArguments="sd:DataTable">[dtMissingCC]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="sd:DataTable">[dtWorkings.AsEnumerable().Where(Function(row) String.IsNullOrWhiteSpace(row("CC identified").ToString()) AndAlso Not String.IsNullOrEmpty(row("Handset Reference").ToString())).CopyToDataTable()]</InArgument>
+              <InArgument x:TypeArguments="sd:DataTable">[dtInvoiceData.AsEnumerable().Where(Function(row) String.IsNullOrWhiteSpace(row("CC identified").ToString()) AndAlso Not String.IsNullOrEmpty(row("Handset Reference").ToString())).CopyToDataTable()]</InArgument>
             </Assign.Value>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -311,7 +315,7 @@
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:ExcelReadRange AddHeaders="True" DataTable="[dtWorkings]" DisplayName="Read Range - Data Received" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="B3" SheetName="[in_Config(&quot;VodafoneDataReceivedSheetName&quot;).ToString]">
+                      <ui:ExcelReadRange AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Read Range - Data Received" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="B3" SheetName="[in_Config(&quot;VodafoneDataReceivedSheetName&quot;).ToString]">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -335,7 +339,7 @@
                 </sap:WorkflowViewStateService.ViewState>
               </ui:ExcelApplicationScope>
               <FlowStep.Next>
-                <FlowDecision x:Name="__ReferenceID0" Condition="[intRowIndex &lt; dtWorkings.Rows.Count]" DisplayName="HaveRowToProcess?" sap:VirtualizedContainerService.HintSize="113.6,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                <FlowDecision x:Name="__ReferenceID0" Condition="[intRowIndex &lt; dtInvoiceData.Rows.Count]" DisplayName="HaveRowToProcess?" sap:VirtualizedContainerService.HintSize="113.6,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -354,7 +358,7 @@
                           <av:PointCollection x:Key="ConnectorLocation">800,326.32 800,384.4</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log Message - Start Identify CC" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Processing row: &quot;+(intRowIndex+1).ToString+&quot;/&quot;+dtWorkings.RowCount.ToString]">
+                      <ui:LogMessage DisplayName="Log Message - Start Identify CC" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Processing row: &quot;+(intRowIndex+1).ToString+&quot;/&quot;+dtInvoiceData.RowCount.ToString]">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -362,7 +366,7 @@
                         </sap:WorkflowViewStateService.ViewState>
                       </ui:LogMessage>
                       <FlowStep.Next>
-                        <FlowDecision x:Name="__ReferenceID15" sap2010:Annotation.AnnotationText="Skip Emty Rows (subheaders)" Condition="[If(dtWorkings(intRowIndex)(&quot;Company Name&quot;) Is Nothing OrElse String.IsNullOrEmpty(dtWorkings(intRowIndex)(&quot;Company Name&quot;).ToString), True, False)]" DisplayName="EmptyRow?" sap:VirtualizedContainerService.HintSize="125.6,131.2" sap2010:WorkflowViewState.IdRef="FlowDecision_6">
+                        <FlowDecision x:Name="__ReferenceID15" sap2010:Annotation.AnnotationText="Skip Emty Rows (subheaders)" Condition="[If(dtInvoiceData(intRowIndex)(&quot;Company Name&quot;) Is Nothing OrElse String.IsNullOrEmpty(dtInvoiceData(intRowIndex)(&quot;Company Name&quot;).ToString), True, False)]" DisplayName="EmptyRow?" sap:VirtualizedContainerService.HintSize="125.6,131.2" sap2010:WorkflowViewState.IdRef="FlowDecision_6">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -401,7 +405,7 @@
                             </FlowStep>
                           </FlowDecision.True>
                           <FlowDecision.False>
-                            <FlowDecision x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="In Colum I" Condition="[dtWorkings(intRowIndex)(&quot;Max User Ref&quot;).tostring.trim.tolower.contains(&quot;vge ltd&quot;)]" DisplayName="Column Contains VGE?" sap:VirtualizedContainerService.HintSize="125.6,118.4" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                            <FlowDecision x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="In Colum I" Condition="[dtInvoiceData(intRowIndex)(&quot;Max User Ref&quot;).tostring.trim.tolower.contains(&quot;vge ltd&quot;)]" DisplayName="Column Contains VGE?" sap:VirtualizedContainerService.HintSize="125.6,118.4" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -413,7 +417,7 @@
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
                               <FlowDecision.True>
-                                <FlowDecision x:Name="__ReferenceID5" sap2010:Annotation.AnnotationText="In Column J" Condition="[not dtWorkings(intRowIndex)(&quot;Max Allocation Code 1&quot;).tostring.trim.tolower.contains(&quot;990077&quot;)]" DisplayName="Not Column Contains 990077?" sap:VirtualizedContainerService.HintSize="160,118.4" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                                <FlowDecision x:Name="__ReferenceID5" sap2010:Annotation.AnnotationText="In Column J" Condition="[not dtInvoiceData(intRowIndex)(&quot;Max Allocation Code 1&quot;).tostring.trim.tolower.contains(&quot;990077&quot;)]" DisplayName="Not Column Contains 990077?" sap:VirtualizedContainerService.HintSize="160,118.4" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -435,7 +439,7 @@
                                       </sap:WorkflowViewStateService.ViewState>
                                       <Assign DisplayName="Assign 990077 (Column AX)" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_2">
                                         <Assign.To>
-                                          <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC identified")]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC identified")]</OutArgument>
                                         </Assign.To>
                                         <Assign.Value>
                                           <InArgument x:TypeArguments="x:Object">["990077"]</InArgument>
@@ -457,7 +461,7 @@
                                           </sap:WorkflowViewStateService.ViewState>
                                           <Assign DisplayName="Assign Comment" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_6">
                                             <Assign.To>
-                                              <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC comments")]</OutArgument>
+                                              <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC comments")]</OutArgument>
                                             </Assign.To>
                                             <Assign.Value>
                                               <InArgument x:TypeArguments="x:Object">["Value in column I = VGE LTD AND Value in column J not = 990077"]</InArgument>
@@ -500,7 +504,7 @@
                                     </FlowStep>
                                   </FlowDecision.True>
                                   <FlowDecision.False>
-                                    <FlowDecision x:Name="__ReferenceID2" Condition="[dtWorkings(intRowIndex)(&quot;Max Allocation Code 1&quot;).tostring.trim.tolower.contains(&quot;180001&quot;)]" DisplayName="Column Contains 180001?" sap:VirtualizedContainerService.HintSize="142.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
+                                    <FlowDecision x:Name="__ReferenceID2" Condition="[dtInvoiceData(intRowIndex)(&quot;Max Allocation Code 1&quot;).tostring.trim.tolower.contains(&quot;180001&quot;)]" DisplayName="Column Contains 180001?" sap:VirtualizedContainerService.HintSize="142.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -521,7 +525,7 @@
                                           </sap:WorkflowViewStateService.ViewState>
                                           <Assign DisplayName="Assign 180000  (Column AX)" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_3">
                                             <Assign.To>
-                                              <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC identified")]</OutArgument>
+                                              <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC identified")]</OutArgument>
                                             </Assign.To>
                                             <Assign.Value>
                                               <InArgument x:TypeArguments="x:Object">["180000"]</InArgument>
@@ -543,7 +547,7 @@
                                               </sap:WorkflowViewStateService.ViewState>
                                               <Assign DisplayName="Assign Comment" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_7">
                                                 <Assign.To>
-                                                  <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC comments")]</OutArgument>
+                                                  <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC comments")]</OutArgument>
                                                 </Assign.To>
                                                 <Assign.Value>
                                                   <InArgument x:TypeArguments="x:Object">["Value in column J = 180001"]</InArgument>
@@ -562,7 +566,7 @@
                                         </FlowStep>
                                       </FlowDecision.True>
                                       <FlowDecision.False>
-                                        <FlowDecision x:Name="__ReferenceID7" sap2010:Annotation.AnnotationText="in Column K" Condition="[Not String.IsNullOrWhiteSpace(dtWorkings(intRowIndex)(&quot;Max Allocation Code 2&quot;).tostring)]" DisplayName="Employee ID Exists?" sap:VirtualizedContainerService.HintSize="125.6,118.4" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+                                        <FlowDecision x:Name="__ReferenceID7" sap2010:Annotation.AnnotationText="in Column K" Condition="[Not String.IsNullOrWhiteSpace(dtInvoiceData(intRowIndex)(&quot;Max Allocation Code 2&quot;).tostring)]" DisplayName="Employee ID Exists?" sap:VirtualizedContainerService.HintSize="125.6,118.4" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
                                           <sap:WorkflowViewStateService.ViewState>
                                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -584,12 +588,12 @@
                                               </sap:WorkflowViewStateService.ViewState>
                                               <Assign DisplayName="Assign to AX Data From Active list (1)" sap:VirtualizedContainerService.HintSize="433.6,83.2" sap2010:WorkflowViewState.IdRef="Assign_5">
                                                 <Assign.To>
-                                                  <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC identified")]</OutArgument>
+                                                  <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC identified")]</OutArgument>
                                                 </Assign.To>
                                                 <Assign.Value>
                                                   <InArgument x:TypeArguments="x:Object" xml:space="preserve">[(From row In dtActiveList.AsEnumerable()
                             Let personnelNumber = If(row.Field(Of Object)("Pers.No."), Nothing)
-                            Let userRef = If(dtWorkings(intRowIndex)("Max Allocation Code 2"), Nothing)
+                            Let userRef = If(dtInvoiceData(intRowIndex)("Max Allocation Code 2"), Nothing)
                             Where Not IsNothing(personnelNumber) AndAlso
                                   Not IsNothing(userRef) AndAlso
                                   personnelNumber.ToString.ToLower.Trim.Equals(userRef.ToString.ToLower.Trim)
@@ -612,10 +616,10 @@
                                                   </sap:WorkflowViewStateService.ViewState>
                                                   <Assign DisplayName="Assign Comment" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_8">
                                                     <Assign.To>
-                                                      <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC comments")]</OutArgument>
+                                                      <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC comments")]</OutArgument>
                                                     </Assign.To>
                                                     <Assign.Value>
-                                                      <InArgument x:TypeArguments="x:Object">[if(String.IsNullOrEmpty(dtWorkings(intRowIndex)("CC identified").tostring),"","Extract CC from column F where column A = Employee ID (active list tab)")]</InArgument>
+                                                      <InArgument x:TypeArguments="x:Object">[if(String.IsNullOrEmpty(dtInvoiceData(intRowIndex)("CC identified").tostring),"","Extract CC from column F where column A = Employee ID (active list tab)")]</InArgument>
                                                     </Assign.Value>
                                                     <sap:WorkflowViewStateService.ViewState>
                                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -641,12 +645,12 @@
                                               </sap:WorkflowViewStateService.ViewState>
                                               <Assign DisplayName="Assign to AX Data From Active list (2)" sap:VirtualizedContainerService.HintSize="433.6,83.2" sap2010:WorkflowViewState.IdRef="Assign_4">
                                                 <Assign.To>
-                                                  <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC identified")]</OutArgument>
+                                                  <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC identified")]</OutArgument>
                                                 </Assign.To>
                                                 <Assign.Value>
                                                   <InArgument x:TypeArguments="x:String" xml:space="preserve">[(From row In dtActiveList.AsEnumerable()
                             Let personnelNumber = If(row.Field(Of Object)("Personnel Number"), Nothing)
-                            Let userRef = If(dtWorkings(intRowIndex)("Max User Ref"), Nothing)
+                            Let userRef = If(dtInvoiceData(intRowIndex)("Max User Ref"), Nothing)
                             Where Not IsNothing(personnelNumber) AndAlso
                                   Not IsNothing(userRef) AndAlso
                                   personnelNumber.ToString.ToLower.Trim.Equals(userRef.ToString.ToLower.Trim)
@@ -669,10 +673,10 @@
                                                   </sap:WorkflowViewStateService.ViewState>
                                                   <Assign DisplayName="Assign Comment" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_9">
                                                     <Assign.To>
-                                                      <OutArgument x:TypeArguments="x:Object">[dtWorkings(intRowIndex)("CC comments")]</OutArgument>
+                                                      <OutArgument x:TypeArguments="x:Object">[dtInvoiceData(intRowIndex)("CC comments")]</OutArgument>
                                                     </Assign.To>
                                                     <Assign.Value>
-                                                      <InArgument x:TypeArguments="x:Object">[if(String.IsNullOrEmpty(dtWorkings(intRowIndex)("CC identified").tostring),"","Extract CC from column F where column B = Employee Name (active list tab)")]</InArgument>
+                                                      <InArgument x:TypeArguments="x:Object">[if(String.IsNullOrEmpty(dtInvoiceData(intRowIndex)("CC identified").tostring),"","Extract CC from column F where column B = Employee Name (active list tab)")]</InArgument>
                                                     </Assign.Value>
                                                     <sap:WorkflowViewStateService.ViewState>
                                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -723,7 +727,7 @@
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtWorkings.DefaultView.ToTable(False, &quot;CC Identified&quot;, &quot;CC Comments&quot;)]" DisplayName="Write Range - Columns AX + AY" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_Config(&quot;VodafoneDataReceivedSheetName&quot;).ToString]" StartingCell="AX4" />
+                              <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtInvoiceData.DefaultView.ToTable(False, &quot;CC Identified&quot;, &quot;CC Comments&quot;)]" DisplayName="Write Range - Columns AX + AY" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_Config(&quot;VodafoneDataReceivedSheetName&quot;).ToString]" StartingCell="AX4" />
                             </Sequence>
                           </ActivityAction>
                         </ui:ExcelApplicationScope.Body>
@@ -747,7 +751,7 @@
                               <OutArgument x:TypeArguments="sd:DataTable">[dtMissingCC]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="sd:DataTable" xml:space="preserve">[dtWorkings.AsEnumerable().
+                              <InArgument x:TypeArguments="sd:DataTable" xml:space="preserve">[dtInvoiceData.AsEnumerable().
     Where(Function(row) String.IsNullOrEmpty(row.Field(Of String)("CC Identified")) AndAlso 
                         Not String.IsNullOrEmpty(row.Field(Of String)("Company Name"))).
     CopyToDataTable()]</InArgument>
