@@ -33,14 +33,14 @@
       "Path": "Tests/WorkflowTestCaseTemplate.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "strMaxQtyDescription&Sequence_3",
-        "listUniqueFee&Sequence_3",
-        "dtInvoiceFilteredOnFee&Sequence_3",
-        "listOccurringFee&Sequence_3",
         "Config&Sequence_1",
         "strInvoice&Sequence_3",
         "dictInvoice&Sequence_3",
-        "dtInvoice&Sequence_3"
+        "dtInvoice&Sequence_3",
+        "listOccurringFee&Sequence_3",
+        "dtInvoiceFilteredOnFee&Sequence_3",
+        "listUniqueFee&Sequence_3",
+        "strMaxQtyDescription&Sequence_3"
       ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
@@ -65,6 +65,9 @@
       "Path": "Framework/Process.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "dictOccurrence&Sequence_1",
+        "strMailBody&Sequence_1",
+        "strMaxQtyDescription&Sequence_1",
         "listUniqueFee&Sequence_1",
         "dtInvoiceFilteredOnFee&Sequence_1",
         "listOccurringFee&Sequence_1",
@@ -141,6 +144,7 @@
         "dtInvoiceData&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
+        "out_strMailBody",
         "in_strTemplatePath",
         "in_strMaxQtyDescription",
         "in_Config",
@@ -161,6 +165,36 @@
       "ArgumentsSectionElementsOrder": [
         "in_Config",
         "in_strInvoiceFilePath",
+        "in_strTemplatePath"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/O365_SendEmail.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "strAppID&Sequence_1",
+        "sstrSecret&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_Config",
+        "in_strMailTo",
+        "in_strMailBody",
+        "in_strMailSubject",
+        "in_arrFilePaths"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.7 Update Journal.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dtWorkings&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_Config",
         "in_strTemplatePath"
       ],
       "ConstantsSectionElementsOrder": [],

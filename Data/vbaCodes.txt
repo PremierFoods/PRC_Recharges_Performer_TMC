@@ -98,3 +98,82 @@ Sub CreateAndFormatPivotTable(worksheet as string)
     ' Clean up
     Application.CutCopyMode = False
 End Sub
+
+Sub ExtendFormula(worksheet as String, lastRow as Long)
+    Dim formulaCell As Range
+
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Sheets(worksheet)
+
+    if ws.Name = "Inv" Then
+ 	' Set the cell that contains the initial formula
+    	Set formulaCell = ws.Range("O2")
+	
+    	' Extend the formula down to the last row
+    	formulaCell.AutoFill Destination:=ws.Range("O2:O" & lastRow)
+    End if
+  
+    if ws.Name = "Journal" Then
+	
+	' Get the value from cell B4
+    	sourceValue = ThisWorkbook.Worksheets(worksheet).Range("B4").Value  
+
+        ' Loop through each cell in the range  and assign the value from B4
+        For Each cell In ThisWorkbook.Worksheets(worksheet).Range("B5:B"& lastRow)
+           cell.Value = sourceValue
+        Next cell
+
+    	' Set the cell that contains the initial formula
+    	Set formulaCell = ws.Range("I4")
+
+    	' Extend the formula down to the last row
+    	formulaCell.AutoFill Destination:=ws.Range("I4:I" & lastRow)
+
+    	' Set the cell that contains the initial formula
+    	Set formulaCell = ws.Range("L4")
+
+   	 ' Extend the formula down to the last row
+    	formulaCell.AutoFill Destination:=ws.Range("L4:L" & lastRow)
+
+    	' Set the cell that contains the initial formula
+    	Set formulaCell = ws.Range("S4")
+
+    	' Extend the formula down to the last row
+    	formulaCell.AutoFill Destination:=ws.Range("S4:S" & lastRow)
+    End if
+
+End Sub
+
+Sub InsertFormulaInMultipleColumns(worksheet as string, lastRow as long)
+    Dim ws As Worksheet
+    Dim col As Range
+    Dim startColumn As Integer
+    Dim endColumn As Integer
+
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Sheets(worksheet)
+    
+    ' Set the range of columns where you want to add the formula
+    startColumn = 8 ' Column H
+    endColumn = 15   ' Column O
+
+    ' Loop through each column in the specified range and apply the formula
+    For i = startColumn To endColumn
+        ' Set the formula in the specified last row for each column
+        ws.Cells(lastRow + 1, i).Formula = "=SUM(" & ws.Cells(2, i).Address & ":" & ws.Cells(lastRow, i).Address & ")"
+    Next i
+End Sub
+
+Sub ExcludeSpecificValueInPivot(worksheet as string, excludeValue as string)
+    Dim ws As Worksheet
+    Dim pt As PivotTable
+    Dim pf As PivotField
+    Dim pi As PivotItem
+
+    ' Set worksheet and pivot table
+    Set ws = ThisWorkbook.Worksheets(worksheet) ' Replace with your sheet name
+    Set pt = ws.PivotTables("PivotTable1")     ' Replace with your pivot table name
+    Set pf = pt.PivotFields("Row Labels")
+    Set pi = pf.PivotItems(excludeValue) ' Replace "ExcludeValue" with the item you want to hide
+    pi.Visible = False
+End Sub

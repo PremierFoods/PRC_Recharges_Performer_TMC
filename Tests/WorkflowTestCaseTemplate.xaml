@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TestWorkflowTemplate" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1410.4,2481.6" sap2010:WorkflowViewState.IdRef="TestWorkflowTemplate_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="TestWorkflowTemplate" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1055.2,3132.8" sap2010:WorkflowViewState.IdRef="TestWorkflowTemplate_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>Microsoft.VisualBasic</x:String>
@@ -106,7 +106,7 @@
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Template workflow used to create tests for workflows in the process.&#xA;Create a new test workflow by copying and renaming this file." DisplayName="Test Template" sap:VirtualizedContainerService.HintSize="756,2416.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Template workflow used to create tests for workflows in the process.&#xA;Create a new test workflow by copying and renaming this file." DisplayName="Test Template" sap:VirtualizedContainerService.HintSize="756,3068" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data." Name="Config" />
     </Sequence.Variables>
@@ -138,7 +138,7 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="693.6,1313.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="693.6,1964.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:String" Name="strInvoice" />
         <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="dictInvoice" />
@@ -153,30 +153,32 @@
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.1 Read Invoice PDF.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="387.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.1 Read Invoice PDF.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.7 Update Journal.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="484.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.7 Update Journal.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
             <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="Config" />
           </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_strPDFInvoice">
-            <Literal x:TypeArguments="x:String">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\Invoice_I13395_20241001_091929.pdf</Literal>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">
+            <Literal x:TypeArguments="x:String">I:\Group\RPA\Ui Path Code\Alexandra\Recharges\05 - September\TMC\TMC Recharges P05.xlsx</Literal>
           </InArgument>
-          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dtInvoice">
-            <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dtInvoice" />
-          </OutArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_strMaxQtyDescription">
-            <VisualBasicReference x:TypeArguments="x:String" ExpressionText="strMaxQtyDescription" />
-          </OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim dictOccurrence = New Dictionary(Of String, Integer)()&#xD;&#xA;out_listOccurringFee = New List(Of String)&#xD;&#xA;out_listUniqueFee = New List(Of String)&#xD;&#xA;'Add count of each Fee to dictionary&#xD;&#xA;For Each row As DataRow In in_dtInvoice.Rows&#xD;&#xA;    Dim cellValue As String = row(&quot;Unit Price&quot;).ToString()&#xD;&#xA;    &#xD;&#xA;    If dictOccurrence.ContainsKey(cellValue) Then&#xD;&#xA;        dictOccurrence(cellValue) += 1&#xD;&#xA;    Else&#xD;&#xA;        dictOccurrence(cellValue) = 1&#xD;&#xA;    End If&#xD;&#xA;Next&#xD;&#xA;&#xD;&#xA;'If Fee occurs more than once, add to list&#xD;&#xA;For Each row As DataRow In in_dtInvoice.Rows&#xD;&#xA;    Dim cellValue As String = row(&quot;Unit Price&quot;).ToString()&#xD;&#xA;    If Not out_listOccurringFee.Contains(cellValue) AndAlso dictOccurrence(cellValue) &lt;&gt; 1 Then&#xD;&#xA;        out_listOccurringFee.add(cellValue)&#xD;&#xA;&#x9;Else If not out_listOccurringFee.Contains(cellValue)&#xD;&#xA;&#x9;&#x9;out_listUniqueFee.add(cellValue)&#xD;&#xA;    End If&#xD;&#xA;Next&#xD;&#xA;" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="387.2,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.1 Read Invoice PDF.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="484.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.1 Read Invoice PDF.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strPDFInvoice">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\Invoice_I13395_20241001_091929.pdf</InArgument>
+          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dtInvoice">[dtInvoice]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_strMaxQtyDescription">[strMaxQtyDescription]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim dictOccurrence = New Dictionary(Of String, Integer)()&#xA;out_listOccurringFee = New List(Of String)&#xA;out_listUniqueFee = New List(Of String)&#xA;'Add count of each Fee to dictionary&#xA;For Each row As DataRow In in_dtInvoice.Rows&#xA;    Dim cellValue As String = row(&quot;Unit Price&quot;).ToString()&#xA;    &#xA;    If dictOccurrence.ContainsKey(cellValue) Then&#xA;        dictOccurrence(cellValue) += 1&#xA;    Else&#xA;        dictOccurrence(cellValue) = 1&#xA;    End If&#xA;Next&#xA;&#xA;'If Fee occurs more than once, add to list&#xA;For Each row As DataRow In in_dtInvoice.Rows&#xA;    Dim cellValue As String = row(&quot;Unit Price&quot;).ToString()&#xA;    If Not out_listOccurringFee.Contains(cellValue) AndAlso dictOccurrence(cellValue) &lt;&gt; 1 Then&#xA;        out_listOccurringFee.add(cellValue)&#xA;&#x9;Else If not out_listOccurringFee.Contains(cellValue)&#xA;&#x9;&#x9;out_listUniqueFee.add(cellValue)&#xA;    End If&#xA;Next&#xA;" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="484.8,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
         <ui:InvokeCode.Arguments>
           <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtInvoice">[dtInvoice]</InArgument>
           <OutArgument x:TypeArguments="scg:List(x:String)" x:Key="out_listOccurringFee">[listOccurringFee]</OutArgument>
           <OutArgument x:TypeArguments="scg:List(x:String)" x:Key="out_listUniqueFee">[listUniqueFee]</OutArgument>
         </ui:InvokeCode.Arguments>
       </ui:InvokeCode>
-      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each occurring fee" sap:VirtualizedContainerService.HintSize="387.2,52.8" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listOccurringFee]">
+      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each occurring fee" sap:VirtualizedContainerService.HintSize="484.8,52.8" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listOccurringFee]">
         <ui:ForEach.Body>
           <ActivityAction x:TypeArguments="x:String">
             <ActivityAction.Argument>
@@ -215,7 +217,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ForEach>
-      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each unique fee" sap:VirtualizedContainerService.HintSize="387.2,52.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listUniqueFee]">
+      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each unique fee" sap:VirtualizedContainerService.HintSize="484.8,52.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listUniqueFee]">
         <ui:ForEach.Body>
           <ActivityAction x:TypeArguments="x:String">
             <ActivityAction.Argument>
@@ -253,36 +255,49 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ForEach>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.4 Create Active List.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="387.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.4 Create Active List.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.4 Create Active List.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="484.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.4 Create Active List.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-            <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="Config" />
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">
-            <Literal x:TypeArguments="x:String">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\TMC Template.xlsx</Literal>
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_strActiveListFile">
-            <Literal x:TypeArguments="x:String">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\CRTravelManagementDatav01-Component1.csv</Literal>
-          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\TMC Template.xlsx</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strActiveListFile">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\CRTravelManagementDatav01-Component1.csv</InArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.5 Add Invoice Data to Template.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="387.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.5 Add Invoice Data to Template.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.5 Add Invoice Data to Template.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="484.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.5 Add Invoice Data to Template.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-            <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="Config" />
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_strInvoiceFilePath">
-            <Literal x:TypeArguments="x:String">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\Invoice_Backing_I13395_20241001_091929.xlsx</Literal>
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_strMaxQtyDescription">
-            <VisualBasicValue x:TypeArguments="x:String" ExpressionText="strMaxQtyDescription" />
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">
-            <Literal x:TypeArguments="x:String">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\TMC Template.xlsx</Literal>
-          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strInvoiceFilePath">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\Invoice_Backing_I13395_20241001_091929.xlsx</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strMaxQtyDescription">[strMaxQtyDescription]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\TMC Template.xlsx</InArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_strMailBody" />
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="387.2,142.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[&quot; &quot;]" />
+      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="484.8,304" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+        <ui:CommentOut.Body>
+          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="449.6,225.6" sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.7 Update Journal.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="387.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.7 Update Journal.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\TMC Template.xlsx</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+          </Sequence>
+        </ui:CommentOut.Body>
+      </ui:CommentOut>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.8 Update Header.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="484.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.8 Update Header.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">C:\Users\alexandra.x.marcu\Downloads\TMC Invoice\TMC Template.xlsx</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strFiscalYear">2024</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strFiscalMonth">6</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_strAttachmentMonth">5</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="484.8,142.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[&quot; &quot;]" />
       <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="387.2,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_2">
         <ui:CommentOut.Body>
           <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="545.6,1024" sap2010:WorkflowViewState.IdRef="Sequence_7">

@@ -4,6 +4,7 @@
     <x:Property Name="in_strInvoiceFilePath" Type="InArgument(x:String)" />
     <x:Property Name="in_strMaxQtyDescription" Type="InArgument(x:String)" />
     <x:Property Name="in_strTemplatePath" Type="InArgument(x:String)" />
+    <x:Property Name="out_strMailBody" Type="OutArgument(x:String)" />
   </x:Members>
   <this:AfterResume.in_strMaxQtyDescription>
     <InArgument x:TypeArguments="x:String" />
@@ -14,7 +15,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1410.4,2707.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1055.2,4163.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AfterResume_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -155,7 +156,7 @@
       <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - 3.4 Add Invoice Data to Template" sap:VirtualizedContainerService.HintSize="655.2,2642.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - 3.4 Add Invoice Data to Template" sap:VirtualizedContainerService.HintSize="655.2,4098.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dtInvoiceData" />
       <Variable x:TypeArguments="sd:DataTable" Name="dtActiveList" />
@@ -195,19 +196,19 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ExcelApplicationScope>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Invoice " sap:VirtualizedContainerService.HintSize="592.8,1828" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strInvoiceFilePath]">
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Invoice " sap:VirtualizedContainerService.HintSize="592.8,2453.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strInvoiceFilePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="559.2,1718.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="559.2,2344" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <Switch x:TypeArguments="x:String" DisplayName="Switch Description" Expression="[in_strMaxQtyDescription]" sap:VirtualizedContainerService.HintSize="496.8,386.4" sap2010:WorkflowViewState.IdRef="Switch`1_4">
+            <Switch x:TypeArguments="x:String" DisplayName="Switch Description" Expression="[in_strMaxQtyDescription]" sap:VirtualizedContainerService.HintSize="496.8,280" sap2010:WorkflowViewState.IdRef="Switch`1_4">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -264,17 +265,15 @@
                 </ui:ExcelReadRange.Range>
               </ui:ExcelReadRange>
             </Switch>
-            <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row As datarow In io_dtInvoiceData.Rows&#xD;&#xA;If row(&quot;Cost Centre&quot;).tostring = &quot;(blank)&quot;&#xD;&#xA;&#x9;If in_dtActiveList.AsEnumerable.Any(Function(x) x(&quot;Personnel Number&quot;).ToString.ToLower.Trim = row(&quot;First Name&quot;).ToString.ToLower.Trim+&quot; &quot;+row(&quot;Last Name&quot;).ToString.ToLower.Trim)&#xD;&#xA;&#x9;&#x9;row(&quot;Cost Centre&quot;) = in_dtActiveList.AsEnumerable.Where(Function(x)  x(&quot;Personnel Number&quot;).ToString.ToLower.Trim = row(&quot;First Name&quot;).ToString.ToLower.Trim+&quot; &quot;+row(&quot;Last Name&quot;).ToString.ToLower.Trim).CopyToDataTable.Rows.Item(0)(&quot;CC to use for recharge&quot;).ToString&#xD;&#xA;&#x9;End If&#xD;&#xA;&#x9;If row(&quot;Last Name&quot;).ToString = &quot;Demo&quot;&#xD;&#xA;&#x9;&#x9;row(&quot;Cost Centre&quot;) = 990005&#xD;&#xA;&#x9;End if&#xD;&#xA;End If&#xD;&#xA;If row(&quot;Cost Centre&quot;).ToString &lt;&gt; &quot;(blank)&quot;&#xD;&#xA;&#x9;Select Case row(&quot;Cost Centre&quot;).ToString&#xD;&#xA;    &#x9;Case &quot;990244&quot;&#xD;&#xA;        &#x9;row(&quot;Cost Centre&quot;) = &quot;990003&quot;&#xD;&#xA;    &#x9;Case &quot;990010&quot;&#xD;&#xA;         &#x9;row(&quot;Cost Centre&quot;) = &quot;990210&quot;&#xD;&#xA;    &#x9;Case &quot;990030&quot;&#xD;&#xA;        &#x9;row(&quot;Cost Centre&quot;) = &quot;990003&quot;&#xD;&#xA;    &#x9;Case &quot;A16000&quot;&#xD;&#xA;        &#x9;row(&quot;Cost Centre&quot;) = &quot;990061&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;277055&quot;&#xD;&#xA;         &#x9;row(&quot;Cost Centre&quot;) = &quot;277005&quot;&#xD;&#xA;&#x9;&#x9;Case &quot;H16010&quot;&#xD;&#xA;         &#x9;row(&quot;Cost Centre&quot;) = &quot;H10610&quot;&#xD;&#xA;&#x9;End Select&#x9;&#xD;&#xA;End If&#xD;&#xA;If io_dtInvoiceData.Columns.Contains(&quot;Total&quot;)&#xD;&#xA;&#x9;row(&quot;Total&quot;) = &quot;&quot;&#xD;&#xA;Else&#xD;&#xA;&#x9;row(&quot;Fee&quot;) = &quot;&quot;&#xD;&#xA;End If&#xD;&#xA;&#xD;&#xA;Next&#xD;&#xA;" DisplayName="Populate CC identified, Name identified and CC comments" sap:VirtualizedContainerService.HintSize="496.8,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row As datarow In io_dtInvoiceData.Rows&#xA;If row(&quot;Cost Centre&quot;).tostring = &quot;(blank)&quot;&#xA;&#x9;If in_dtActiveList.AsEnumerable.Any(Function(x) x(&quot;Pers.No.&quot;).ToString.ToLower.Trim = row(&quot;Employee ID&quot;).ToString.ToLower.Trim)&#xA;&#x9;&#x9;row(&quot;Cost Centre&quot;) = in_dtActiveList.AsEnumerable.Where(Function(x) x(&quot;Pers.No.&quot;).ToString.ToLower.Trim = row(&quot;Employee ID&quot;).ToString.ToLower.Trim).CopyToDataTable.Rows.Item(0)(&quot;CC to use for recharge&quot;).ToString&#xA;&#x9;End If&#xA;&#x9;If row(&quot;Last Name&quot;).ToString = &quot;Demo&quot;&#xA;&#x9;&#x9;row(&quot;Cost Centre&quot;) = 990005&#xA;&#x9;End if&#xA;End If&#xA;If row(&quot;Cost Centre&quot;).ToString &lt;&gt; &quot;(blank)&quot;&#xA;&#x9;Select Case row(&quot;Cost Centre&quot;).ToString&#xA;    &#x9;Case &quot;990244&quot;&#xA;        &#x9;row(&quot;Cost Centre&quot;) = &quot;990003&quot;&#xA;    &#x9;Case &quot;990010&quot;&#xA;         &#x9;row(&quot;Cost Centre&quot;) = &quot;990210&quot;&#xA;    &#x9;Case &quot;990030&quot;&#xA;        &#x9;row(&quot;Cost Centre&quot;) = &quot;990003&quot;&#xA;    &#x9;Case &quot;A16000&quot;&#xA;        &#x9;row(&quot;Cost Centre&quot;) = &quot;990061&quot;&#xA;&#x9;&#x9;Case &quot;277055&quot;&#xA;         &#x9;row(&quot;Cost Centre&quot;) = &quot;277005&quot;&#xA;&#x9;&#x9;Case &quot;H16010&quot;&#xA;         &#x9;row(&quot;Cost Centre&quot;) = &quot;H10610&quot;&#xA;&#x9;End Select&#x9;&#xA;End If&#xA;If io_dtInvoiceData.Columns.Contains(&quot;Total&quot;)&#xA;&#x9;row(&quot;Total&quot;) = &quot;&quot;&#xA;Else&#xA;&#x9;row(&quot;Fee&quot;) = &quot;&quot;&#xA;End If&#xA;&#xA;Next&#xA;" DisplayName="Populate CC identified, Name identified and CC comments" sap:VirtualizedContainerService.HintSize="496.8,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
               <ui:InvokeCode.Arguments>
                 <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoiceData">[dtInvoiceData]</InOutArgument>
                 <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtActiveList">[dtActiveList]</InArgument>
               </ui:InvokeCode.Arguments>
             </ui:InvokeCode>
-            <ui:InvokeCode ContinueOnError="{x:Null}" Code="io_dtInvoiceData.columns.Add(&quot;Mileage capture ( all except casual)&quot;)&#xD;&#xA;io_dtInvoiceData.columns.Add(&quot;Cash IQ (Cash allowance Fuel Card)&quot;)&#xD;&#xA;io_dtInvoiceData.columns.Add(&quot;Pay and Reclaim ( Cash allowance pay &amp; reclaim)&quot;)&#xD;&#xA;io_dtInvoiceData.columns.Add(&quot;Visa to drive ( Cash allowance FC  + casual)&quot;)&#xD;&#xA;io_dtInvoiceData.columns.Add(&quot;Casual user&quot;)&#xD;&#xA;io_dtInvoiceData.columns.Add(&quot;VAT Reporting (all)&quot;)&#xD;&#xA;io_dtInvoiceData.columns.Add(&quot;DVLA Checks&quot;)" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="496.8,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_4">
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="io_dtInvoiceData.columns.Add(&quot;Mileage capture ( all except casual)&quot;)&#xA;io_dtInvoiceData.columns.Add(&quot;Cash IQ (Cash allowance Fuel Card)&quot;)&#xA;io_dtInvoiceData.columns.Add(&quot;Pay and Reclaim ( Cash allowance pay &amp; reclaim)&quot;)&#xA;io_dtInvoiceData.columns.Add(&quot;Visa to drive ( Cash allowance FC  + casual)&quot;)&#xA;io_dtInvoiceData.columns.Add(&quot;Casual user&quot;)&#xA;io_dtInvoiceData.columns.Add(&quot;VAT Reporting (all)&quot;)&#xA;io_dtInvoiceData.columns.Add(&quot;DVLA Checks&quot;)" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="496.8,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_4">
               <ui:InvokeCode.Arguments>
-                <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoiceData">
-                  <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dtInvoiceData" />
-                </InOutArgument>
+                <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoiceData">[dtInvoiceData]</InOutArgument>
               </ui:InvokeCode.Arguments>
             </ui:InvokeCode>
             <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="496.8,542.4" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[in_Config(&quot;listOfShortDescriptions&quot;).ToString.Split(&quot;,&quot;)]">
@@ -290,17 +289,11 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                     <ui:ExcelReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtDescriptionSheet]" DisplayName="Read Range Description sheet" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_10" SheetName="[shortDescription]" />
-                    <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row As datarow In in_dtDescription.Rows&#xD;&#xA;Dim targetRow As DataRow = io_dtInvoiceData.AsEnumerable().FirstOrDefault(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString)&#xD;&#xA;If targetRow IsNot Nothing Then&#xD;&#xA;&#x9;Select Case in_strShortDescription&#xD;&#xA;    &#x9;Case &quot;Monthly User Fee&quot;&#xD;&#xA;        &#x9;targetRow(&quot;Mileage capture ( all except casual)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Fee&quot;).ToString&#xD;&#xA;    &#x9;Case &quot;VAT Reporting&quot;&#xD;&#xA;         &#x9;targetRow(&quot;VAT Reporting (all)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Total&quot;).ToString&#xD;&#xA;    &#x9;Case &quot;Cash IQ&quot;&#xD;&#xA;        &#x9;targetRow(&quot;Cash IQ (Cash allowance Fuel Card)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Fee&quot;).ToString&#xD;&#xA;    &#x9;Case &quot;Casual User Scheme&quot;&#xD;&#xA;        &#x9;targetRow(&quot;Casual user&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Fee&quot;).ToString&#xD;&#xA;&#x9;&#x9;Case &quot;DVLA Licence checks&quot;&#xD;&#xA;         &#x9;targetRow(&quot;DVLA Checks&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Fee&quot;).ToString&#xD;&#xA;&#x9;&#x9;Case &quot;Pay &amp; Reclaim&quot;&#xD;&#xA;         &#x9;targetRow(&quot;Pay and Reclaim ( Cash allowance pay &amp; reclaim)&quot;) =  in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Total&quot;).ToString&#xD;&#xA;&#x9;&#x9;Case &quot;VISA 2 DRIVE&quot;&#xD;&#xA;&#x9;&#x9;&#x9;targetRow(&quot;Visa to drive ( Cash allowance FC  + casual)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;First Name&quot;).ToString = row(&quot;First Name&quot;).ToString And x(&quot;Last Name&quot;).ToString = row(&quot;Last Name&quot;).ToString).CopyToDataTable.rows(0)(&quot;Fee&quot;).ToString&#xD;&#xA;&#x9;End Select&#xD;&#xA;End If&#xD;&#xA;&#xD;&#xA;Next&#xD;&#xA;" DisplayName="Populate CC identified, Name identified and CC comments" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
+                    <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row As datarow In in_dtDescription.Rows&#xA;Dim targetRow As DataRow = io_dtInvoiceData.AsEnumerable().FirstOrDefault(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower)&#xA;If targetRow IsNot Nothing Then&#xA;&#x9;Select Case in_strShortDescription&#xA;    &#x9;Case &quot;Monthly User Fee&quot;&#xA;&#x9;&#x9;&#x9;'If in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.rows.count &gt; 1&#xA;        &#x9;&#x9;targetRow(&quot;Mileage capture ( all except casual)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.AsEnumerable.where(Function(x) IsNumeric(x(&quot;Fee&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Fee&quot;))).ToString&#xA;&#x9;&#x9;&#x9;'Else&#xA;&#x9;&#x9;&#x9;'&#x9;targetRow(&quot;Mileage capture ( all except casual)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.rows(0)(&quot;Fee&quot;).ToString&#xA;&#x9;&#x9;&#x9;'End If&#xA;&#x9;&#x9;&#x9;&#xA;    &#x9;Case &quot;VAT Reporting&quot;&#xA;&#x9;&#x9;&#x9;targetRow(&quot;VAT Reporting (all)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.AsEnumerable.where(Function(x) IsNumeric(x(&quot;Total&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Total&quot;))).ToString&#xA;         &#x9;'targetRow(&quot;VAT Reporting (all)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.rows(0)(&quot;Total&quot;).ToString&#xA;    &#x9;Case &quot;Cash IQ&quot;&#xA;        &#x9;targetRow(&quot;Cash IQ (Cash allowance Fuel Card)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.AsEnumerable.where(Function(x) IsNumeric(x(&quot;Fee&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Fee&quot;))).ToString&#xA;    &#x9;Case &quot;Casual User Scheme&quot;&#xA;        &#x9;targetRow(&quot;Casual user&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.AsEnumerable.where(Function(x) IsNumeric(x(&quot;Fee&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Fee&quot;))).ToString&#xA;&#x9;&#x9;Case &quot;DVLA Licence checks&quot;&#xA;         &#x9;targetRow(&quot;DVLA Checks&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.AsEnumerable.where(Function(x) IsNumeric(x(&quot;Fee&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Fee&quot;))).ToString&#xA;&#x9;&#x9;Case &quot;Pay &amp; Reclaim&quot;&#xA;         &#x9;targetRow(&quot;Pay and Reclaim ( Cash allowance pay &amp; reclaim)&quot;) =  in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).AsEnumerable.where(Function(x) IsNumeric(x(&quot;Total&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Total&quot;))).ToString&#xA;&#x9;&#x9;Case &quot;VISA 2 DRIVE&quot;&#xA;&#x9;&#x9;&#x9;targetRow(&quot;Visa to drive ( Cash allowance FC  + casual)&quot;) = in_dtDescription.AsEnumerable.Where(Function(x) x(&quot;Employee ID&quot;).tostring = row(&quot;Employee ID&quot;).tostring And x(&quot;First Name&quot;).ToString.ToLower = row(&quot;First Name&quot;).ToString.tolower And x(&quot;Last Name&quot;).ToString.ToLower = row(&quot;Last Name&quot;).ToString.ToLower).CopyToDataTable.AsEnumerable.where(Function(x) IsNumeric(x(&quot;Fee&quot;))).Sum(Function(x) Convert.ToDouble(x(&quot;Fee&quot;))).ToString&#xA;&#x9;End Select&#xA;End If&#xA;&#xA;Next&#xA;" DisplayName="Populate CC identified, Name identified and CC comments" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
                       <ui:InvokeCode.Arguments>
-                        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoiceData">
-                          <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dtInvoiceData" />
-                        </InOutArgument>
-                        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtDescription">
-                          <VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtDescriptionSheet" />
-                        </InArgument>
-                        <InArgument x:TypeArguments="x:String" x:Key="in_strShortDescription">
-                          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="shortDescription" />
-                        </InArgument>
+                        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoiceData">[dtInvoiceData]</InOutArgument>
+                        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtDescription">[dtDescriptionSheet]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_strShortDescription">[shortDescription]</InArgument>
                       </ui:InvokeCode.Arguments>
                     </ui:InvokeCode>
                   </Sequence>
@@ -308,23 +301,81 @@
               </ui:ForEach.Body>
             </ui:ForEach>
             <ui:RemoveDataColumn Column="{x:Null}" ColumnName="{x:Null}" ColumnIndex="3" DataTable="[dtInvoiceData]" DisplayName="Remove Data Column Parent Name" sap:VirtualizedContainerService.HintSize="496.8,188" sap2010:WorkflowViewState.IdRef="RemoveDataColumn_3" />
+            <If Condition="[dtInvoiceData.AsEnumerable().Any(function(x) x(&quot;Cost Centre&quot;).ToString.StartsWith(&quot;27&quot;)) = true]" DisplayName="If Invoice contains CC starting with 27" sap:VirtualizedContainerService.HintSize="496.8,692" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="376.8,254.4" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeCode ContinueOnError="{x:Null}" Code="System.Text.StringBuilder htmlBuilder = new System.Text.StringBuilder();&#xA;&#xA;htmlBuilder.Append(@&quot;&#xA;&lt;!DOCTYPE html&gt;&#xA;&lt;html lang='en'&gt;&#xA;&lt;head&gt;&#xA;    &lt;meta charset='UTF-8'&gt;&#xA;    &lt;meta name='viewport' content='width=device-width, initial-scale=1.0'&gt;&#xA;    &lt;title&gt;KFL Cost Centers&lt;/title&gt;&#xA;    &lt;style&gt;&#xA;        table {&#xA;            border-collapse: collapse;&#xA;            width: 100%;&#xA;        }&#xA;        th, td {&#xA;            border: 1px solid #ddd;&#xA;            padding: 8px;&#xA;            text-align: left;&#xA;        }&#xA;        th {&#xA;            background-color: #f2f2f2;&#xA;        }&#xA;    &lt;/style&gt;&#xA;&lt;/head&gt;&#xA;&lt;body&gt;&#xA;    &lt;p&gt;Hi,&lt;/p&gt;&#xA;&#x9;&lt;p&gt;Attached you will find the Journal the robot has prepared.&lt;/p&gt;&#xA;    &lt;p&gt;The following persons contain KFL cost Centers for the &lt;strong&gt;TMC recharges&lt;/strong&gt;:&lt;/p&gt;&#xA;    &lt;table&gt;&#xA;        &lt;tr&gt;&#xA;            &lt;th&gt;First Name&lt;/th&gt;&#xA;            &lt;th&gt;Last Name&lt;/th&gt;&#xA;            &lt;th&gt;Cost Centre&lt;/th&gt;&#xA;        &lt;/tr&gt;&quot;);&#xA;&#xA;foreach (System.Data.DataRow row in dtKFL.Rows)&#xA;{&#xA;    htmlBuilder.Append($@&quot;&#xA;        &lt;tr&gt;&#xA;            &lt;td&gt;{row[&quot;First Name&quot;]}&lt;/td&gt;&#xA;            &lt;td&gt;{row[&quot;Last Name&quot;]}&lt;/td&gt;&#xA;            &lt;td&gt;{row[&quot;Cost Centre&quot;]}&lt;/td&gt;&#xA;        &lt;/tr&gt;&quot;);&#xA;}&#xA;&#xA;htmlBuilder.Append(@&quot;&#xA;    &lt;/table&gt;&#xA;&lt;/body&gt;&#xA;&lt;/html&gt;&quot;);&#xA;&#xA;string htmlEmailContent = htmlBuilder.ToString();&#xA;&#xA;strMailBody = htmlEmailContent;" DisplayName="Invoke Code - Create Mail Body" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_5" Language="CSharp">
+                    <ui:InvokeCode.Arguments>
+                      <InArgument x:TypeArguments="sd:DataTable" x:Key="dtKFL">[dtInvoiceData.AsEnumerable().Where(function(x) x("Cost Centre").ToString.StartsWith("27")).CopyToDataTable]</InArgument>
+                      <InOutArgument x:TypeArguments="x:String" x:Key="strMailBody">[out_strMailBody]</InOutArgument>
+                    </ui:InvokeCode.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeCode>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="376.8,254.4" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeCode ContinueOnError="{x:Null}" Code="System.Text.StringBuilder htmlBuilder = new System.Text.StringBuilder();&#xA;&#xA;htmlBuilder.Append(@&quot;&#xA;&lt;!DOCTYPE html&gt;&#xA;&lt;html lang='en'&gt;&#xA;&lt;head&gt;&#xA;    &lt;meta charset='UTF-8'&gt;&#xA;    &lt;meta name='viewport' content='width=device-width, initial-scale=1.0'&gt;&#xA;    &lt;style&gt;&#xA;        th, td {&#xA;            border: 1px solid #ddd;&#xA;            padding: 8px;&#xA;            text-align: left;&#xA;        }&#xA;        th {&#xA;            background-color: #f2f2f2;&#xA;        }&#xA;    &lt;/style&gt;&#xA;&lt;/head&gt;&#xA;&lt;body&gt;&#xA;    &lt;p&gt;Hi,&lt;/p&gt;&#xA;&#x9;&lt;p&gt;Attached you will find the Journal the robot has prepared.&lt;/p&gt;&#xA;&lt;/body&gt;&#xA;&lt;/html&gt;&quot;);&#xA;string htmlEmailContent = htmlBuilder.ToString();&#xA;&#xA;strMailBody = htmlEmailContent;" DisplayName="Invoke Code - Create Mail Body" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_6" Language="CSharp">
+                    <ui:InvokeCode.Arguments>
+                      <InArgument x:TypeArguments="sd:DataTable" x:Key="dtKFL">[dtInvoiceData.AsEnumerable().Where(function(x) x("Cost Centre").ToString.StartsWith("27")).CopyToDataTable]</InArgument>
+                      <InOutArgument x:TypeArguments="x:String" x:Key="strMailBody">[out_strMailBody]</InOutArgument>
+                    </ui:InvokeCode.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeCode>
+                </Sequence>
+              </If.Else>
+            </If>
           </Sequence>
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - TMC template" sap:VirtualizedContainerService.HintSize="592.8,309.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - TMC template" sap:VirtualizedContainerService.HintSize="592.8,1140" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,200" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="547.2,1030.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtInvoiceData]" DisplayName="Write Range - Inv" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_30" SheetName="[in_Config(&quot;InvSheetName&quot;).ToString]" StartingCell="[in_Config(&quot;InvRange&quot;).ToString]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtInvoiceData]" DisplayName="Write Range - Inv" sap:VirtualizedContainerService.HintSize="484.8,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_30" SheetName="[in_Config(&quot;InvSheetName&quot;).ToString]" StartingCell="[in_Config(&quot;InvRange&quot;).ToString]" />
+            <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Extend Formula" EntryMethodName="[in_Config(&quot;vbaExtendFormula&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;InvSheetName&quot;).ToString,(dtInvoiceData.Rows.Count+1).ToString}]" sap:VirtualizedContainerService.HintSize="484.8,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_1" />
+            <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Insert Formula In Multiple Columns" EntryMethodName="[in_Config(&quot;vbaInsertFormulaInMultipleColumns&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;InvSheetName&quot;).ToString,(dtInvoiceData.Rows.Count+1).ToString}]" sap:VirtualizedContainerService.HintSize="484.8,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_2" />
+            <ui:ExcelRefreshPivotTable DisplayName="Refresh Pivot Table - Inv" sap:VirtualizedContainerService.HintSize="484.8,88" sap2010:WorkflowViewState.IdRef="ExcelRefreshPivotTable_1" SheetName="[in_Config(&quot;InvSheetName&quot;).ToString]" TableName="[in_Config(&quot;PivotTableInvSheet&quot;).ToString]" />
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="484.8,406.4" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="449.6,328" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Exclude Specific Value In Pivot- 0" EntryMethodName="[in_Config(&quot;vbaExcludeSpecificValueInPivot&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;InvSheetName&quot;).ToString,&quot;0&quot;}]" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_3" />
+                  <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Exclude Specific Value In Pivot - (blank)" EntryMethodName="[in_Config(&quot;vbaExcludeSpecificValueInPivot&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;InvSheetName&quot;).ToString,&quot;(blank)&quot;}]" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_4" />
+                </Sequence>
+              </ui:CommentOut.Body>
+            </ui:CommentOut>
           </Sequence>
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
