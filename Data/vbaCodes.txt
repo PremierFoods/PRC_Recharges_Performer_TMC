@@ -99,8 +99,10 @@ Sub CreateAndFormatPivotTable(worksheet as string)
     Application.CutCopyMode = False
 End Sub
 
-Sub ExtendFormula(worksheet as String, lastRow as Long)
+Sub ExtendFormula(worksheet as String, pivotWorksheet as string, lastRow as Long, pivotName as string)
     Dim formulaCell As Range
+    Dim sourceValue As Variant
+    Dim cell As Range
 
     ' Set the worksheet
     Set ws = ThisWorkbook.Sheets(worksheet)
@@ -108,19 +110,33 @@ Sub ExtendFormula(worksheet as String, lastRow as Long)
     if ws.Name = "Inv" Then
  	' Set the cell that contains the initial formula
     	Set formulaCell = ws.Range("O2")
-	
     	' Extend the formula down to the last row
     	formulaCell.AutoFill Destination:=ws.Range("O2:O" & lastRow)
+
+	' Set the cell that contains the initial formula
+    	Set formulaCell = ws.Range("P2")
+    	' Extend the formula down to the last row
+    	formulaCell.AutoFill Destination:=ws.Range("P2:P" & lastRow)
+
+	' Set the cell that contains the initial formula
+    	Set formulaCell = ws.Range("Q2")
+    	' Extend the formula down to the last row
+    	formulaCell.AutoFill Destination:=ws.Range("Q2:Q" & lastRow)
     End if
   
     if ws.Name = "Journal" Then
-	
-	' Get the value from cell B4
+        Set pt = ThisWorkbook.Worksheets(pivotWorksheet).PivotTables(pivotName)  
+        pt.RefreshTable
+        lastRow = pt.DataBodyRange.Count + 2
+
+       ' Get the value from cell B4
     	sourceValue = ThisWorkbook.Worksheets(worksheet).Range("B4").Value  
 
         ' Loop through each cell in the range  and assign the value from B4
         For Each cell In ThisWorkbook.Worksheets(worksheet).Range("B5:B"& lastRow)
-           cell.Value = sourceValue
+           If cell.Locked = False Then
+            cell.Value = sourceValue
+           End If
         Next cell
 
     	' Set the cell that contains the initial formula
@@ -134,14 +150,15 @@ Sub ExtendFormula(worksheet as String, lastRow as Long)
 
    	 ' Extend the formula down to the last row
     	formulaCell.AutoFill Destination:=ws.Range("L4:L" & lastRow)
+        
+        ' Get the value from cell S4
+    	sourceValue = ThisWorkbook.Worksheets(worksheet).Range("S4").Value  
 
-    	' Set the cell that contains the initial formula
-    	Set formulaCell = ws.Range("S4")
-
-    	' Extend the formula down to the last row
-    	formulaCell.AutoFill Destination:=ws.Range("S4:S" & lastRow)
-    End if
-
+        ' Loop through each cell in the range  and assign the value from S4
+        For Each cell In ThisWorkbook.Worksheets(worksheet).Range("S5:S"& lastRow)
+           cell.Value = sourceValue
+        Next cell
+    end if
 End Sub
 
 Sub InsertFormulaInMultipleColumns(worksheet as string, lastRow as long)
@@ -164,16 +181,68 @@ Sub InsertFormulaInMultipleColumns(worksheet as string, lastRow as long)
     Next i
 End Sub
 
-Sub ExcludeSpecificValueInPivot(worksheet as string, excludeValue as string)
+Sub ExcludeSpecificValueInPivot(worksheet as string, excludeList as string, pivotName as string, pivotField as string)
     Dim ws As Worksheet
     Dim pt As PivotTable
     Dim pf As PivotField
     Dim pi As PivotItem
 
     ' Set worksheet and pivot table
-    Set ws = ThisWorkbook.Worksheets(worksheet) ' Replace with your sheet name
-    Set pt = ws.PivotTables("PivotTable1")     ' Replace with your pivot table name
-    Set pf = pt.PivotFields("Row Labels")
-    Set pi = pf.PivotItems(excludeValue) ' Replace "ExcludeValue" with the item you want to hide
-    pi.Visible = False
+    Set ws = ThisWorkbook.Worksheets(worksheet)
+    Set pt = ws.PivotTables(pivotName)
+    Set pf = pt.PivotFields(pivotField)
+
+'MsgBox "Field '" & pf & "' found in PivotTable '" & pt & "'."
+
+    ' Loop through each item in the pivot field
+    For Each pi In pf.PivotItems
+        pi.Visible = True
+        For j = LBound(split(excludeList,",")) To UBound(split(excludeList,","))
+            If pi.Name = split(excludeList,",")(j) Then
+		'MsgBox "Exclude '" & pi.Name & "' from PivotTable '" & pt & "'."
+                pi.Visible = False
+                Exit For
+            End If
+        Next j
+    Next pi
+End Sub
+
+Sub SetPivotTableRange(worksheet as string, lastRow as Long)
+    Dim pivotTable As PivotTable
+    Dim pivotRange As Range
+    Dim dataRange As Range
+    
+    Set ws = ThisWorkbook.Sheets(worksheet)
+    Set dataRange = ws.Range("Inv!$A$1:$Q$" & lastRow)
+    Set pivotTable = ws.PivotTables(1)
+    pivotTable.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
+         SourceType:=xlDatabase, _
+         SourceData:=dataRange)
+    Set pivotTable = ws.PivotTables(2)
+    pivotTable.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
+         SourceType:=xlDatabase, _
+         SourceData:=dataRange)
+    Set pivotTable = ws.PivotTables(3)
+    pivotTable.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
+         SourceType:=xlDatabase, _
+         SourceData:=dataRange)
+End Sub
+
+Public Sub InsertPicture(strWorksheet as string,strRange as string,strImgPath as string)
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim shape As Shape
+    
+    ' Set the worksheet and range
+    Set ws = ThisWorkbook.Sheets(strWorksheet)
+    Set rng = ws.Range(strRange)
+    
+    ' Insert the picture and set the shape object
+    Set shape = ws.Shapes.AddPicture(Filename:=strImgPath, _
+                                     LinkToFile:=msoFalse, _
+                                     SaveWithDocument:=msoCTrue, _
+                                     Left:=rng.Left, _
+                                     Top:=rng.Top, _
+                                     Width:=-1, _
+                                     Height:=-1)
 End Sub

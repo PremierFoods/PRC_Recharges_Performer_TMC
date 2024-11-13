@@ -1,15 +1,16 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="AfterResume" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="AfterResume" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_strTemplatePath" Type="InArgument(x:String)" />
-    <x:Property Name="in_strFiscalYear" Type="InArgument(x:String)" />
-    <x:Property Name="in_strFiscalMonth" Type="InArgument(x:String)" />
-    <x:Property Name="in_strAttachmentMonth" Type="InArgument(x:String)" />
+    <x:Property Name="in_strInvoiceNo" Type="InArgument(x:String)" />
+    <x:Property Name="in_strInvoiceDate" Type="InArgument(x:String)" />
+    <x:Property Name="in_strTotalNetAmount" Type="InArgument(x:String)" />
+    <x:Property Name="in_strPeriod" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1055.2,1157.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1055.2,1250.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AfterResume_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -65,6 +66,7 @@
       <x:String>UiPath.UIAutomationNext.Activities.Triggers</x:String>
       <x:String>UiPath.Platform.Triggers.Scope</x:String>
       <x:String>UiPath.Excel.Activities.Business</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -146,35 +148,31 @@
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - 3.7 Update Header" sap:VirtualizedContainerService.HintSize="545.6,1092.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Default="Recharges - 3.4 Update Summary Data" Name="strSubProcessName" />
-      <Variable x:TypeArguments="sd:DataTable" Name="dtDataReceived" />
-    </Sequence.Variables>
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - 3.6 Update SAP Dnl" sap:VirtualizedContainerService.HintSize="545.6,1185.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Headers" sap:VirtualizedContainerService.HintSize="483.2,949.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_7" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - TMC" sap:VirtualizedContainerService.HintSize="483.2,949.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,840" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,840" sap2010:WorkflowViewState.IdRef="Sequence_5">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ExcelWriteCell Cell="F13" DisplayName="Write Cell - Journal Text Header" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_8" SheetName="[in_Config(&quot;HeaderSheetName&quot;).ToString]" Text="[string.Format(in_Config(&quot;FiscalText&quot;).ToString,in_strFiscalMonth).ToString]" />
-            <ui:ExcelWriteCell Cell="F15" DisplayName="Write Cell - Prepared By" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_10" SheetName="[in_Config(&quot;HeaderSheetName&quot;).ToString]" Text="Robot" />
-            <ui:ExcelWriteCell Cell="H15" DisplayName="Write Cell -  Date prepared" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_11" SheetName="[in_Config(&quot;HeaderSheetName&quot;).ToString]" Text="[Date.Now.ToString(&quot;dd/MM/yyyy&quot;)]" />
-            <ui:ExcelWriteCell Cell="B9" DisplayName="Write Cell - Financial year" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_12" SheetName="[in_Config(&quot;HeaderSheetName&quot;).ToString]" Text="[Date.Now.ToString(&quot;yy&quot;)+&quot;_&quot;+Date.Now.AddYears(1).ToString(&quot;yy&quot;)]" />
-            <ui:ExcelWriteCell Cell="B13" DisplayName="Write Cell - Document Date" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_13" SheetName="[in_Config(&quot;HeaderSheetName&quot;).ToString]" Text="[Date.Now.ToString(&quot;dd/MM/yyyy&quot;)]" />
-            <ui:ExcelWriteCell Cell="B16" DisplayName="Write Cell - strPostingPeriod" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_14" SheetName="[in_Config(&quot;HeaderSheetName&quot;).ToString]" Text="[in_strFiscalMonth]" />
+            <ui:ExcelWriteCell Cell="[in_Config(&quot;SapDnlRangePeriodDate&quot;).ToString]" DisplayName="Write Period Date" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="[in_Config(&quot;SapDnlSheetName&quot;).ToString]" Text="[new DateTime(if(in_strPeriod = &quot;01&quot;,cint(date.Today.AddMonths(-1).ToString(&quot;yyyy&quot;)),cint(date.Today.ToString(&quot;yyyy&quot;))),cint(now.AddMonths(-1).ToString(&quot;MM&quot;)),1).ToString(&quot;MM/dd/yyyy&quot;)]" />
+            <ui:ExcelWriteCell Cell="[in_Config(&quot;SapDnlRangeInvNo&quot;).ToString]" DisplayName="Write TMC inv" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="[in_Config(&quot;SapDnlSheetName&quot;).ToString]" Text="[in_strInvoiceNo]" />
+            <ui:ExcelWriteCell Cell="[in_Config(&quot;SapDnlRangeTotalNetAmount&quot;).ToString]" DisplayName="Write Total Net Amount" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="[in_Config(&quot;SapDnlSheetName&quot;).ToString]" Text="[in_strTotalNetAmount]" />
+            <ui:ExcelWriteCell Cell="[in_Config(&quot;SapDnlRangePostingDate&quot;).ToString]" DisplayName="Write Posting Date" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_4" SheetName="[in_Config(&quot;SapDnlSheetName&quot;).ToString]" Text="[now.ToString(&quot;dd.MM.yyyy&quot;)]" />
+            <ui:ExcelWriteCell Cell="[in_Config(&quot;SapDnlRangePeriod&quot;).ToString]" DisplayName="Write Period" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_5" SheetName="[in_Config(&quot;SapDnlSheetName&quot;).ToString]" Text="[in_strPeriod]" />
+            <ui:ExcelWriteCell Cell="[in_Config(&quot;SapDnlRangeDocumentDate&quot;).ToString]" DisplayName="Write Document Date" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_6" SheetName="[in_Config(&quot;SapDnlSheetName&quot;).ToString]" Text="[convert.ToDateTime(in_strInvoiceDate).ToString(&quot;dd.MM.yyyy&quot;)]" />
           </Sequence>
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>

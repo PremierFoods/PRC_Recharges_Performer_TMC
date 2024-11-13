@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1055.2,4647.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1055.2,2777.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="50">
@@ -107,30 +107,21 @@
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="668.8,4542.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="572.8,2712.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dtPivotTable" />
       <Variable x:TypeArguments="x:String" Name="strPeriod" />
       <Variable x:TypeArguments="sd:DataTable" Name="dtDataForJournal" />
       <Variable x:TypeArguments="sd:DataTable" Name="dtInvoice" />
-      <Variable x:TypeArguments="scg:List(x:String)" Name="listOccurringFee">
-        <Variable.Default>
-          <VisualBasicValue x:TypeArguments="scg:List(x:String)" ExpressionText="new list(of String)" />
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[new list(of String)]" Name="listOccurringFee" />
       <Variable x:TypeArguments="sd:DataTable" Default="[new DataTable]" Name="dtInvoiceFilteredOnFee" />
-      <Variable x:TypeArguments="scg:List(x:String)" Name="listUniqueFee">
-        <Variable.Default>
-          <VisualBasicValue x:TypeArguments="scg:List(x:String)" ExpressionText="new list(of String)" />
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[new list(of String)]" Name="listUniqueFee" />
       <Variable x:TypeArguments="x:String" Name="strMaxQtyDescription" />
       <Variable x:TypeArguments="x:String" Name="strMailBody" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int32)" Name="dictOccurrence">
-        <Variable.Default>
-          <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Int32)" ExpressionText="new Dictionary(of string, Integer)" />
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int32)" Default="[new Dictionary(of string, Integer)]" Name="dictOccurrence" />
+      <Variable x:TypeArguments="x:String" Name="strInvoiceNo" />
+      <Variable x:TypeArguments="x:String" Name="strInvoiceDate" />
+      <Variable x:TypeArguments="x:String" Name="strTotalNetAmount" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -138,26 +129,17 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="606.4,142.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
-    <Assign DisplayName="Assign Period" sap:VirtualizedContainerService.HintSize="606.4,80.8" sap2010:WorkflowViewState.IdRef="Assign_2">
-      <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[strPeriod]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[if(in_TransactionItem.SpecificContent("fiscalMonth").ToString.StartsWith("0"),in_TransactionItem.SpecificContent("fiscalMonth").ToString.Replace("0",""),in_TransactionItem.SpecificContent("fiscalMonth").ToString)]</InArgument>
-      </Assign.Value>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </Assign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.1 Read Invoice PDF.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="606.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.1 Read Invoice PDF.xaml">
+    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="510.4,142.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.1 Read Invoice PDF.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.1 Read Invoice PDF.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_strPDFInvoice">[in_TransactionItem.SpecificContent("pdfInvoice").ToString]</InArgument>
         <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dtInvoice">[dtInvoice]</OutArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_strMaxQtyDescription">[strMaxQtyDescription]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_strInvoiceNo">[strInvoiceNo]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_strInvoiceDate">[strInvoiceDate]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_strTotalNetAmount">[strTotalNetAmount]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">[in_TransactionItem.SpecificContent("tmcFile").ToString]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -165,7 +147,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:InvokeWorkflowFile>
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtInvoice]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="606.4,754.4" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtInvoice]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="510.4,52.8" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
@@ -177,7 +159,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[dictOccurrence.ContainsKey(CurrentRow(&quot;Unit Price&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="510.4,525.6" sap2010:WorkflowViewState.IdRef="If_1">
+            <If Condition="[dictOccurrence.ContainsKey(CurrentRow(&quot;Unit Price&quot;).ToString)]" DisplayName="If unit price key already added to dictioary" sap:VirtualizedContainerService.HintSize="510.4,525.6" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Then>
                 <Sequence sap:VirtualizedContainerService.HintSize="476.8,171.2" sap2010:WorkflowViewState.IdRef="Sequence_12">
                   <sap:WorkflowViewStateService.ViewState>
@@ -218,12 +200,12 @@
       </ui:ForEachRow.Body>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEachRow>
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtInvoice]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="606.4,1229.6" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtInvoice]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="510.4,52.8" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
@@ -235,7 +217,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[not listOccurringFee.Contains(CurrentRow(&quot;Unit Price&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="488,1000.8" sap2010:WorkflowViewState.IdRef="If_2">
+            <If Condition="[not listOccurringFee.Contains(CurrentRow(&quot;Unit Price&quot;).ToString)]" DisplayName="If unit price not added to list" sap:VirtualizedContainerService.HintSize="488,1000.8" sap2010:WorkflowViewState.IdRef="If_2">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -300,12 +282,12 @@
       </ui:ForEachRow.Body>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEachRow>
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each occurring fee" sap:VirtualizedContainerService.HintSize="606.4,512.8" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listOccurringFee]">
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each occurring fee" sap:VirtualizedContainerService.HintSize="510.4,512.8" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listOccurringFee]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
@@ -343,7 +325,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each unique fee" sap:VirtualizedContainerService.HintSize="606.4,512.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listUniqueFee]">
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each unique fee" sap:VirtualizedContainerService.HintSize="510.4,512.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listUniqueFee]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
@@ -374,8 +356,14 @@
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.4 Create Active List.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="606.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.4 Create Active List.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.4 Create Active List.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.4 Create Active List.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">[in_TransactionItem.SpecificContent("tmcFile").ToString]</InArgument>
@@ -387,7 +375,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.5 Add Invoice Data to Template.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="606.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.5 Add Invoice Data to Template.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.5 Add Invoice Data to Template.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.5 Add Invoice Data to Template.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_strInvoiceFilePath">[in_TransactionItem.SpecificContent("invoiceReportFile").ToString]</InArgument>
@@ -396,34 +384,32 @@
         <OutArgument x:TypeArguments="x:String" x:Key="out_strMailBody">[strMailBody]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.7 Update Journal.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="606.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.7 Update Journal.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\Recharges - 3.6 Update SAP Dnl.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_20" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.6 Update SAP Dnl.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-          <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem.SpecificContent(&quot;tmcFile&quot;).ToString" />
-        </InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">[in_TransactionItem.SpecificContent("tmcFile").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strInvoiceNo">[strInvoiceNo]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strInvoiceDate">[strInvoiceDate]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strTotalNetAmount">[strTotalNetAmount]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strPeriod">[in_TransactionItem.SpecificContent("fiscalMonth").ToString]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.6 Update Header.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="606.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.8 Update Header.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.7 Update Journal.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.7 Update Journal.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-          <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem.SpecificContent(&quot;tmcFile&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_strFiscalYear">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem.SpecificContent(&quot;fiscalYear&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_strFiscalMonth">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem.SpecificContent(&quot;fiscalMonth&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_strAttachmentMonth" />
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">[in_TransactionItem.SpecificContent("tmcFile").ToString]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\O365_SendEmail.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="606.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" UnSafe="False" WorkflowFileName="SubProcesses\O365_SendEmail.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recharges - 3.8 Update Headers.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="SubProcesses\Recharges - 3.8 Update Headers.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strTemplatePath">[in_TransactionItem.SpecificContent("tmcFile").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strFiscalYear">[in_TransactionItem.SpecificContent("fiscalYear").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strFiscalMonth">[in_TransactionItem.SpecificContent("fiscalMonth").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_strInvoiceDate">[strInvoiceDate]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubProcesses\O365_SendEmail.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" UnSafe="False" WorkflowFileName="SubProcesses\O365_SendEmail.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_strMailTo">[in_Config("Recharges_MAIL_TO").ToString]</InArgument>

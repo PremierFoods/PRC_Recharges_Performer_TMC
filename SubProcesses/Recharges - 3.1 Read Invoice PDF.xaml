@@ -1,14 +1,21 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="AfterResume" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="AfterResume" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_strPDFInvoice" Type="InArgument(x:String)" />
     <x:Property Name="out_dtInvoice" Type="OutArgument(sd:DataTable)" />
     <x:Property Name="out_strMaxQtyDescription" Type="OutArgument(x:String)" />
+    <x:Property Name="out_strInvoiceNo" Type="OutArgument(x:String)" />
+    <x:Property Name="out_strInvoiceDate" Type="OutArgument(x:String)" />
+    <x:Property Name="out_strTotalNetAmount" Type="OutArgument(x:String)" />
+    <x:Property Name="in_strTemplatePath" Type="InArgument(x:String)" />
   </x:Members>
+  <this:AfterResume.in_strTemplatePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AfterResume.in_strTemplatePath>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>893.6,706.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1055.2,1028.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AfterResume_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -148,9 +155,10 @@
       <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Recharges - 3.1 Read Invoice PDF" sap:VirtualizedContainerService.HintSize="449.6,531.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read PDF invoice&#xA;2. Create invoice table&#xA;3. Extract data from pdf and add to invoice table&#xA;4. Open PDF invoice&#xA;5. Take screenshot&#xA;6. Paste screenshot into San Dnl + Invoices tab from TMC template&#xA;" DisplayName="Recharges - 3.1 Read Invoice PDF" sap:VirtualizedContainerService.HintSize="499.2,964" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="strInvoice" />
+      <Variable x:TypeArguments="ui:Image" Name="screenshot" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -158,23 +166,104 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadPDFText PreserveFormatting="{x:Null}" DisplayName="Read PDF Text" FileName="[in_strPDFInvoice]" sap:VirtualizedContainerService.HintSize="387.2,83.2" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[strInvoice]" />
-    <ui:BuildDataTable DataTable="[out_dtInvoice]" DisplayName="Create Invoice Table" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Quantity&quot; msdata:Caption=&quot;&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Description&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Unit_x0020_Price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Disc_x0020_Amt&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Net_x0020_Amt&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VAT_x0020__x0025_&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VAT&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
-    <ui:InvokeCode ContinueOnError="{x:Null}" Code="'Add values to datatable&#xD;&#xA;For Each description As String In in_listOfDescriptions&#xD;&#xA;&#x9;console.WriteLine(&quot;Description &quot;+description)&#xD;&#xA;&#x9;Dim strPattern As String = &quot;.*&quot;+description+&quot;.*&quot; &#xD;&#xA;&#x9;'Dim strExtractQuantity As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,&quot;^(?:.*?)&quot;+description).Value&#xD;&#xA;&#x9;'console.WriteLine(&quot;Quantity &quot;+strExtractQuantity)&#xD;&#xA;&#x9;Dim strExtractOtherFields As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,strPattern).Value.Replace(description,&quot;&quot;).replace(&quot;  &quot;,&quot; &quot;)&#xD;&#xA;&#x9;console.WriteLine(&quot;Other fields &quot;+strExtractOtherFields)&#xD;&#xA; &#x9;io_dtInvoice.Rows.Add({Split(strExtractOtherFields, &quot; &quot;)(0),description,Split(strExtractOtherFields, &quot; &quot;)(1),Split(strExtractOtherFields, &quot; &quot;)(2),Split(strExtractOtherFields, &quot; &quot;)(3).Replace(&quot;,&quot;,&quot;&quot;),Split(strExtractOtherFields, &quot; &quot;)(4),Split(strExtractOtherFields, &quot; &quot;)(5)})&#xD;&#xA;Next&#xD;&#xA;Dim strMaxQuantity As String = io_dtInvoice.AsEnumerable.Max(Function(r) Int32.Parse(r(&quot;Quantity&quot;).ToString)).ToString&#xD;&#xA;out_strMaxQtyDesctiption = io_dtInvoice.AsEnumerable.Where(Function(x) x(&quot;Quantity&quot;).ToString = strMaxQuantity).CopyToDataTable.Rows(0)(&quot;Description&quot;).ToString" DisplayName="Extract table values from invoice and add to datatable" sap:VirtualizedContainerService.HintSize="387.2,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
-      <ui:InvokeCode.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_strInvoice">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="strInvoice" />
-        </InArgument>
-        <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_listOfDescriptions">
-          <VisualBasicValue x:TypeArguments="scg:List(x:String)" ExpressionText="in_Config(&quot;listOfDescriptions&quot;).ToString.Split(&quot;,&quot;c).ToList()" />
-        </InArgument>
-        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoice">
-          <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="out_dtInvoice" />
-        </InOutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_strMaxQtyDesctiption">
-          <VisualBasicReference x:TypeArguments="x:String" ExpressionText="out_strMaxQtyDescription" />
-        </OutArgument>
-      </ui:InvokeCode.Arguments>
-    </ui:InvokeCode>
+    <ui:ReadPDFText PreserveFormatting="{x:Null}" DisplayName="Read PDF Text" FileName="[in_strPDFInvoice]" sap:VirtualizedContainerService.HintSize="436.8,83.2" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[strInvoice]" />
+    <ui:BuildDataTable DataTable="[out_dtInvoice]" DisplayName="Create Invoice Table" sap:VirtualizedContainerService.HintSize="436.8,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Quantity&quot; msdata:Caption=&quot;&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Description&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Unit_x0020_Price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Disc_x0020_Amt&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Net_x0020_Amt&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VAT_x0020__x0025_&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VAT&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+    <TryCatch DisplayName="Try - Extract table values from invoice and add to datatable" sap:VirtualizedContainerService.HintSize="436.8,396" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <ui:InvokeCode ContinueOnError="{x:Null}" Code="'Extract Invoice No&#xA;out_strInvoiceNo = System.Text.RegularExpressions.Regex.Matches(in_strInvoice,&quot;Invoice No(.*)&quot;)(0).Groups(1).Value.Trim&#xA;console.WriteLine(&quot;Invoice No &quot;+out_strInvoiceNo)&#xA;&#xA;'Extract Invoice Date&#xA;out_strInvoiceDate = System.Text.RegularExpressions.Regex.Matches(in_strInvoice,&quot;Invoice Date(.*)&quot;)(0).Groups(1).Value.Trim&#xA;console.WriteLine(&quot;Invoice Date &quot;+out_strInvoiceDate)&#xA;&#xA;'Extract Total Net Amount&#xA;out_strTotalNetAmount = System.Text.RegularExpressions.Regex.Matches(in_strInvoice,&quot;Total Net Amount £(.*)&quot;)(0).Groups(1).Value.Trim&#xA;console.WriteLine(&quot;Total Net Amount &quot;+out_strTotalNetAmount)&#xA;&#xA;'Add values to datatable&#xA;For Each description As String In in_listOfDescriptions&#xA;&#x9;console.WriteLine(&quot;Description &quot;+description)&#xA;&#x9;Dim strPattern As String = &quot;.*&quot;+description+&quot;.*&quot; &#xA;&#x9;Dim strExtractOtherFields As String = system.Text.RegularExpressions.Regex.Match(in_strInvoice,strPattern).Value.Replace(description,&quot;&quot;).replace(&quot;  &quot;,&quot; &quot;)&#xA;&#x9;console.WriteLine(&quot;Other fields &quot;+strExtractOtherFields)&#xA; &#x9;io_dtInvoice.Rows.Add({Split(strExtractOtherFields, &quot; &quot;)(0),description,Split(strExtractOtherFields, &quot; &quot;)(1),Split(strExtractOtherFields, &quot; &quot;)(2),Split(strExtractOtherFields, &quot; &quot;)(3).Replace(&quot;,&quot;,&quot;&quot;),Split(strExtractOtherFields, &quot; &quot;)(4),Split(strExtractOtherFields, &quot; &quot;)(5)})&#xA;Next&#xA;Dim strMaxQuantity As String = io_dtInvoice.AsEnumerable.Max(Function(r) Int32.Parse(r(&quot;Quantity&quot;).ToString)).ToString&#xA;out_strMaxQtyDesctiption = io_dtInvoice.AsEnumerable.Where(Function(x) x(&quot;Quantity&quot;).ToString = strMaxQuantity).CopyToDataTable.Rows(0)(&quot;Description&quot;).ToString" DisplayName="Extract table values from invoice and add to datatable" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+          <ui:InvokeCode.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="in_strInvoice">[strInvoice]</InArgument>
+            <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_listOfDescriptions">[in_Config("listOfDescriptions").ToString.Split(","c).ToList()]</InArgument>
+            <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dtInvoice">[out_dtInvoice]</InOutArgument>
+            <OutArgument x:TypeArguments="x:String" x:Key="out_strMaxQtyDesctiption">[out_strMaxQtyDescription]</OutArgument>
+            <OutArgument x:TypeArguments="x:String" x:Key="out_strInvoiceNo">[out_strInvoiceNo]</OutArgument>
+            <OutArgument x:TypeArguments="x:String" x:Key="out_strInvoiceDate">[out_strInvoiceDate]</OutArgument>
+            <OutArgument x:TypeArguments="x:String" x:Key="out_strTotalNetAmount">[out_strTotalNetAmount]</OutArgument>
+          </ui:InvokeCode.Arguments>
+        </ui:InvokeCode>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="403.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Throw DisplayName="Throw Inner Exception" Exception="[new SystemException(exception.InnerException.Message)]" sap:VirtualizedContainerService.HintSize="334.4,90.4" sap2010:WorkflowViewState.IdRef="Throw_1" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="436.8,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="545.6,1172" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:StartProcess Arguments="{x:Null}" WorkingDirectory="{x:Null}" DisplayName="Start Process - PDF invoice" FileName="[in_strPDFInvoice]" sap:VirtualizedContainerService.HintSize="483.2,88" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+          <ui:SetFocus DelayBefore="{x:Null}" DelayMS="{x:Null}" DisplayName="Set Focus - PDF invoice" sap:VirtualizedContainerService.HintSize="483.2,107.2" sap2010:WorkflowViewState.IdRef="SetFocus_1">
+            <ui:SetFocus.Target>
+              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="b620dd15-bd72-4533-8dee-9371db0fe99e" InformativeScreenshot="fc5077c32d4c1b1976fcfe916df2eb2d" Selector="&lt;wnd app='acrord32.exe' cls='AcrobatSDIWindow' title='*' /&gt;">
+                <ui:Target.TimeoutMS>
+                  <InArgument x:TypeArguments="x:Int32" />
+                </ui:Target.TimeoutMS>
+                <ui:Target.WaitForReady>
+                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                </ui:Target.WaitForReady>
+              </ui:Target>
+            </ui:SetFocus.Target>
+          </ui:SetFocus>
+          <ui:TakeScreenshot DisplayName="Take Screenshot - PDF invoice" sap:VirtualizedContainerService.HintSize="483.2,86.4" sap2010:WorkflowViewState.IdRef="TakeScreenshot_1" Screenshot="[screenshot]" WaitBefore="600">
+            <ui:TakeScreenshot.Target>
+              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="8ffd2612-abfe-4104-aeda-5cac75686c6f">
+                <ui:Target.TimeoutMS>
+                  <InArgument x:TypeArguments="x:Int32" />
+                </ui:Target.TimeoutMS>
+                <ui:Target.WaitForReady>
+                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                </ui:Target.WaitForReady>
+              </ui:Target>
+            </ui:TakeScreenshot.Target>
+          </ui:TakeScreenshot>
+          <ui:SaveImage DisplayName="Save Image of exchange rate table" FileName="[in_Config(&quot;Recharges_SaveScreenshotLocation&quot;).ToString]" sap:VirtualizedContainerService.HintSize="483.2,134.4" sap2010:WorkflowViewState.IdRef="SaveImage_1" Image="[screenshot]" />
+          <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Vodafone usage" sap:VirtualizedContainerService.HintSize="483.2,309.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
+            <ui:ExcelApplicationScope.Body>
+              <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,200" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Insert Picture" EntryMethodName="[in_Config(&quot;vbaInsertPicture&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;SapDnlSheetName&quot;).ToString,in_Config(&quot;SapDnlCaptureRange&quot;).ToString,in_Config(&quot;Recharges_SaveScreenshotLocation&quot;).ToString}]" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_1" />
+                </Sequence>
+              </ActivityAction>
+            </ui:ExcelApplicationScope.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:ExcelApplicationScope>
+          <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" AppliesTo="OnlyCurrentSession" DisplayName="Kill Process - PDF" sap:VirtualizedContainerService.HintSize="483.2,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="AcroRd32.exe" />
+        </Sequence>
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
   </Sequence>
 </Activity>

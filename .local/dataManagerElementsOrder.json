@@ -50,9 +50,14 @@
       "Path": "SubProcesses/Recharges - 3.1 Read Invoice PDF.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "screenshot&Sequence_1",
         "strInvoice&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
+        "in_strTemplatePath",
+        "out_strTotalNetAmount",
+        "out_strInvoiceDate",
+        "out_strInvoiceNo",
         "out_strMaxQtyDescription",
         "out_dtInvoice",
         "in_strPDFInvoice",
@@ -65,6 +70,9 @@
       "Path": "Framework/Process.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "strTotalNetAmount&Sequence_1",
+        "strInvoiceDate&Sequence_1",
+        "strInvoiceNo&Sequence_1",
         "dictOccurrence&Sequence_1",
         "strMailBody&Sequence_1",
         "strMaxQtyDescription&Sequence_1",
@@ -109,8 +117,7 @@
         "dtUnprocessedActiveList&Sequence_1",
         "intRowIndex&Sequence_1",
         "rowData&Sequence_1",
-        "strSheetName&Sequence_5",
-        "strSheetName&Sequence_3"
+        "strSheetName&Sequence_5"
       ],
       "ArgumentsSectionElementsOrder": [
         "in_Config",
@@ -139,6 +146,8 @@
       "Path": "SubProcesses/Recharges - 3.5 Add Invoice Data to Template.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "list1&Sequence_1",
+        "dtInvDataFilledIn&Sequence_1",
         "dtDescriptionSheet&Sequence_1",
         "dtActiveList&Sequence_1",
         "dtInvoiceData&Sequence_1"
@@ -154,17 +163,15 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "SubProcesses/Recharges - 3.6 Identify Cost Center.xaml",
+      "Path": "SubProcesses/Recharges - 3.6 Update SAP Dnl.xaml",
       "SortBy": 0,
-      "VariablesSectionElementsOrder": [
-        "dtInvoiceData&Sequence_1",
-        "dtActiveList&Sequence_1",
-        "dtMissingCC&Sequence_1",
-        "strMailBody&Sequence_1"
-      ],
+      "VariablesSectionElementsOrder": [],
       "ArgumentsSectionElementsOrder": [
+        "in_strPeriod",
+        "in_strTotalNetAmount",
+        "in_strInvoiceDate",
+        "in_strInvoiceNo",
         "in_Config",
-        "in_strInvoiceFilePath",
         "in_strTemplatePath"
       ],
       "ConstantsSectionElementsOrder": [],
@@ -190,12 +197,27 @@
     {
       "Path": "SubProcesses/Recharges - 3.7 Update Journal.xaml",
       "SortBy": 0,
-      "VariablesSectionElementsOrder": [
-        "dtWorkings&Sequence_1"
-      ],
+      "VariablesSectionElementsOrder": [],
       "ArgumentsSectionElementsOrder": [
         "in_Config",
         "in_strTemplatePath"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "SubProcesses/Recharges - 3.8 Update Headers.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "strSubProcessName&Sequence_1",
+        "dtDataReceived&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_strInvoiceDate",
+        "in_Config",
+        "in_strTemplatePath",
+        "in_strFiscalYear",
+        "in_strFiscalMonth"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
