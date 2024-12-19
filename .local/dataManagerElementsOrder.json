@@ -33,6 +33,8 @@
       "Path": "Tests/WorkflowTestCaseTemplate.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "screenshot&Sequence_24",
+        "boolPopUp&Sequence_25",
         "Config&Sequence_1",
         "strInvoice&Sequence_3",
         "dictInvoice&Sequence_3",
@@ -50,6 +52,8 @@
       "Path": "SubProcesses/Recharges - 3.1 Read Invoice PDF.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "boolPopUp&Sequence_1",
+        "startProcess&Sequence_1",
         "screenshot&Sequence_1",
         "strInvoice&Sequence_1"
       ],
@@ -218,6 +222,46 @@
         "in_strTemplatePath",
         "in_strFiscalYear",
         "in_strFiscalMonth"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "test.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Framework/KillAllProcesses.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "in_Config"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Framework/SetTransactionStatus.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "QueueRetry&Sequence_17",
+        "ScreenshotPath&Sequence_17"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_BusinessException",
+        "in_TransactionField1",
+        "in_TransactionField2",
+        "in_TransactionID",
+        "in_SystemException",
+        "in_Config",
+        "in_TransactionItem",
+        "io_RetryNumber",
+        "io_TransactionNumber",
+        "io_ConsecutiveSystemExceptions"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
