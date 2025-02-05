@@ -8,7 +8,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1055.2,1448</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1370.4,1589.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AfterResume_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -149,7 +149,7 @@
       <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read Invoice Backing Data&#xA;2. Remove 7th and 8th column from table&#xA;3. Filter Invoice Backing Data on current occurring fee" DisplayName="Recharges - 3.3 Create Other Description Tabs" sap:VirtualizedContainerService.HintSize="655.2,1383.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read Invoice Backing Data&#xA;2. Remove 7th and 8th column from table&#xA;3. Filter Invoice Backing Data on current occurring fee" DisplayName="Recharges - 3.3 Create Other Description Tabs" sap:VirtualizedContainerService.HintSize="655.2,1524.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dtInvoiceData" />
     </Sequence.Variables>
@@ -159,13 +159,13 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Invoice " sap:VirtualizedContainerService.HintSize="592.8,1179.2" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strInvoiceFilePath]">
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Invoice " sap:VirtualizedContainerService.HintSize="592.8,1336.8" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strInvoiceFilePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="559.2,1069.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="559.2,1227.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -182,7 +182,7 @@
                 <InArgument x:TypeArguments="sd:DataTable">[dtInvoiceData.AsEnumerable.Where(function(x) x("Fee").ToString = in_strUniqueFee).CopyToDataTable]</InArgument>
               </Assign.Value>
             </Assign>
-            <Switch x:TypeArguments="x:String" DisplayName="Switch Description" Expression="[in_dtInvoiceFilteredOnFee.rows(0)(&quot;Description&quot;).ToString]" sap:VirtualizedContainerService.HintSize="496.8,280" sap2010:WorkflowViewState.IdRef="Switch`1_3">
+            <Switch x:TypeArguments="x:String" DisplayName="Switch Description" Expression="[in_dtInvoiceFilteredOnFee.rows(0)(&quot;Description&quot;).ToString]" sap:VirtualizedContainerService.HintSize="496.8,437.6" sap2010:WorkflowViewState.IdRef="Switch`1_3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -196,6 +196,7 @@
               <ui:ExcelWriteRange StartingCell="{x:Null}" x:Key="DVLA Licence checks" AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range - DVLA Licence checks" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_20" SheetName="[in_Config(&quot;listOfShortDescriptions&quot;).ToString.split(&quot;,&quot;)(4)]" />
               <ui:ExcelWriteRange StartingCell="{x:Null}" x:Key="Receipt Checking - Pay &amp; Reclaim" AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range - Receipt Checking - Pay &amp; Reclaim" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_21" SheetName="[in_Config(&quot;listOfShortDescriptions&quot;).ToString.split(&quot;,&quot;)(5)]" />
               <ui:ExcelWriteRange StartingCell="{x:Null}" x:Key="Visa to Drive" AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range - Visa to Drive" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_22" SheetName="[in_Config(&quot;listOfShortDescriptions&quot;).ToString.split(&quot;,&quot;)(6)]" />
+              <ui:ExcelWriteRange StartingCell="{x:Null}" x:Key="Cash iQ" AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range - Cash IQ" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_23" SheetName="[in_Config(&quot;listOfShortDescriptions&quot;).ToString.split(&quot;,&quot;)(2)]" />
             </Switch>
           </Sequence>
         </ActivityAction>
