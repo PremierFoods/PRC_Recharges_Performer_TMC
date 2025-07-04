@@ -1,5 +1,6 @@
 {
   "name": "PRC_Recharges_Performer_TMC",
+  "projectId": "5a9a98a1-32dc-4a3a-9870-ee1dcd6a9cd7",
   "description": "Robotic Enterprise Framework",
   "main": "Main.xaml",
   "dependencies": {
@@ -14,7 +15,7 @@
   "entitiesStores": [],
   "schemaVersion": "4.0",
   "studioVersion": "23.4.4.0",
-  "projectVersion": "1.0.28",
+  "projectVersion": "1.0.29",
   "runtimeOptions": {
     "autoDispose": false,
     "netFrameworkLazyLoading": false,
@@ -87,7 +88,8 @@
         "fileName": "Tests\\WorkflowTestCaseTemplate.xaml"
       }
     ],
-    "modernBehavior": false
+    "modernBehavior": false,
+    "saveToCloud": false
   },
   "expressionLanguage": "VisualBasic",
   "entryPoints": [

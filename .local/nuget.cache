@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "K8R1kqMgXGpMp7Q2gT/e/eVAQPAEXZAN4PMRTzBcogAEJ9815e4Itz3SvnwrhdYO0GJ+ivBumjWq0LFhYMqvKA==",
+  "dgSpecHash": "H/dRyRdfyuUqbXtdrjz9ab89s5olV3EAK1i+OdiY3DVaZbBGQLpZWnK/XOcnuFkGzjZ9bcVAD5BjYkgstoEMTA==",
   "success": true,
   "projectFilePath": "I:\\Group\\RPA\\Ui Path Code\\Darius\\PRC_Recharges_Performer_TMC\\.local\\",
   "expectedPackageFiles": [
@@ -135,8 +135,6 @@
     "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\runtime.win.system.net.primitives\\4.3.0\\runtime.win.system.net.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\runtime.win.system.net.sockets\\4.3.0\\runtime.win.system.net.sockets.4.3.0.nupkg.sha512",
     "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\runtime.win.system.runtime.extensions\\4.3.0\\runtime.win.system.runtime.extensions.4.3.0.nupkg.sha512",
-    "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\runtime.win7-x64.runtime.native.system.io.compression\\4.3.2\\runtime.win7-x64.runtime.native.system.io.compression.4.3.2.nupkg.sha512",
-    "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\runtime.win7.system.private.uri\\4.3.0\\runtime.win7.system.private.uri.4.3.0.nupkg.sha512",
     "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\sharpziplib\\1.4.2\\sharpziplib.1.4.2.nupkg.sha512",
     "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\sixlabors.fonts\\1.0.0-beta18\\sixlabors.fonts.1.0.0-beta18.nupkg.sha512",
     "C:\\Users\\vpn.x.tquila\\.nuget\\packages\\system.activities.viewmodels\\1.0.0-20240418.6\\system.activities.viewmodels.1.0.0-20240418.6.nupkg.sha512",

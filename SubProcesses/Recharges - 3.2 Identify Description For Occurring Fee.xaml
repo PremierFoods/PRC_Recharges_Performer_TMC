@@ -149,7 +149,7 @@
       <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read Invoice Backing Data&#xA;2. Remove 7th and 8th column from table&#xA;3. Filter Invoice Backing Data on current occurring fee&#xA;4. Write Data tab with filtered Invoice Backing Data&#xA;5. Create Pivot table and Pivot Data Output tab&#xA;6. Read Pivot Data Output tab&#xA;7. If total from Pivot Data Output tab matches any quantities from PDF invoice, create Modified Fee table as copy of Pivot Data Output and overwrite Total with current occuring fee&#xA;8. Write new tab containing the name of the cateogry corresponding to the matching quantity from the PDF invoice&#xA;9. FIlter Pivot Data Output table to remove occuring fee&#xA;" DisplayName="Recharges - 3.2 Identify Description For Occurring Fee" sap:VirtualizedContainerService.HintSize="741.6,2723.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read Invoice Backing Data&#xA;2. Remove 7th and 8th column from table&#xA;3. Filter Invoice Backing Data on current occurring fee&#xA;4. Write Data tab with filtered Invoice Backing Data&#xA;5. Create Pivot table and Pivot Data Output tab&#xA;6. Read Pivot Data Output tab&#xA;7. If total from Pivot Data Output tab matches any quantities from PDF invoice, create Modified Fee table as copy of Pivot Data Output and overwrite Total with current occuring fee&#xA;8. Write new tab containing the name of the cateogry corresponding to the matching quantity from the PDF invoice&#xA;9. FIlter Pivot Data Output table to remove occuring fee&#xA;" DisplayName="Recharges - 3.2 Identify Description For Occurring Fee" sap:VirtualizedContainerService.HintSize="1352.0000000000002,3666.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dtInvoiceData" />
       <Variable x:TypeArguments="sd:DataTable" Name="dtPivotDataOutput" />
@@ -161,23 +161,23 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Invoice " sap:VirtualizedContainerService.HintSize="1260.8,3748" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strInvoiceFilePath]">
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Invoice " sap:VirtualizedContainerService.HintSize="1232,3567.2" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strInvoiceFilePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1227.2,3598.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1198.4,3434.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Delete all sheets but one" EntryMethodName="[in_Config(&quot;vbaDeleteAllSheetsButOne&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;InvoiceSummarySheetName&quot;).ToString}]" sap:VirtualizedContainerService.HintSize="1164.8,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_2" />
-            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Read Range - Invoice Backing Data" sap:VirtualizedContainerService.HintSize="1164.8,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="[in_Config(&quot;invoiceSummaryRange&quot;).ToString]" SheetName="[in_Config(&quot;InvoiceSummarySheetName&quot;).ToString]" />
-            <ui:RemoveDataColumn Column="{x:Null}" ColumnName="{x:Null}" ColumnIndex="7" DataTable="[dtInvoiceData]" DisplayName="Remove Empty Column" sap:VirtualizedContainerService.HintSize="1164.8,188" sap2010:WorkflowViewState.IdRef="RemoveDataColumn_2" />
-            <ui:RemoveDataColumn Column="{x:Null}" ColumnName="{x:Null}" ColumnIndex="8" DataTable="[dtInvoiceData]" DisplayName="Remove Empty Column" sap:VirtualizedContainerService.HintSize="1164.8,188" sap2010:WorkflowViewState.IdRef="RemoveDataColumn_1" />
-            <Assign DisplayName="Filter on Fee = occurring fee" sap:VirtualizedContainerService.HintSize="1164.8,80.8" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - Delete all sheets but one" EntryMethodName="[in_Config(&quot;vbaDeleteAllSheetsButOne&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;InvoiceSummarySheetName&quot;).ToString}]" sap:VirtualizedContainerService.HintSize="1164.8,120" sap2010:WorkflowViewState.IdRef="InvokeVBA_2" />
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Read Range - Invoice Backing Data" sap:VirtualizedContainerService.HintSize="1164.8,92" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="[in_Config(&quot;invoiceSummaryRange&quot;).ToString]" SheetName="[in_Config(&quot;InvoiceSummarySheetName&quot;).ToString]" />
+            <ui:RemoveDataColumn Column="{x:Null}" ColumnName="{x:Null}" ColumnIndex="7" DataTable="[dtInvoiceData]" DisplayName="Remove Empty Column" sap:VirtualizedContainerService.HintSize="1164.8,220" sap2010:WorkflowViewState.IdRef="RemoveDataColumn_2" />
+            <ui:RemoveDataColumn Column="{x:Null}" ColumnName="{x:Null}" ColumnIndex="8" DataTable="[dtInvoiceData]" DisplayName="Remove Empty Column" sap:VirtualizedContainerService.HintSize="1164.8,220" sap2010:WorkflowViewState.IdRef="RemoveDataColumn_1" />
+            <Assign DisplayName="Filter on Fee = occurring fee" sap:VirtualizedContainerService.HintSize="1164.8,113.6" sap2010:WorkflowViewState.IdRef="Assign_1">
               <Assign.To>
                 <OutArgument x:TypeArguments="sd:DataTable">[dtInvoiceData]</OutArgument>
               </Assign.To>
@@ -185,10 +185,10 @@
                 <InArgument x:TypeArguments="sd:DataTable">[dtInvoiceData.AsEnumerable.Where(function(x) x("Fee").ToString = in_strOccurringFee).CopyToDataTable]</InArgument>
               </Assign.Value>
             </Assign>
-            <ui:ExcelWriteRange StartingCell="{x:Null}" AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range - Data" sap:VirtualizedContainerService.HintSize="1164.8,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_Config(&quot;invoiceDataSheetName&quot;).ToString]" />
-            <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - CreateAndFormatPivotTable" EntryMethodName="[in_Config(&quot;vbaCreateAndFormatPivotTable&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;invoiceDataSheetName&quot;).ToString}]" sap:VirtualizedContainerService.HintSize="1164.8,88" sap2010:WorkflowViewState.IdRef="InvokeVBA_1" />
-            <ui:ExcelReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtPivotDataOutput]" DisplayName="Read Range - Pivot Data Output" sap:VirtualizedContainerService.HintSize="1164.8,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="[in_Config(&quot;invoicePivotDataOutputSheetName&quot;).ToString]" />
-            <If Condition="[in_dtInvoiceFilteredOnFee.AsEnumerable.Any(function(x) x(&quot;Quantity&quot;).ToString = dtPivotDataOutput.rows.Count.ToString) = true]" DisplayName="If count of rows in Pivot Data Output matches any of the Quntities for Invoice" sap:VirtualizedContainerService.HintSize="1164.8,1146.4" sap2010:WorkflowViewState.IdRef="If_2">
+            <ui:ExcelWriteRange StartingCell="{x:Null}" AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range - Data" sap:VirtualizedContainerService.HintSize="1164.8,120" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_Config(&quot;invoiceDataSheetName&quot;).ToString]" />
+            <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="[in_Config(&quot;vbaCodes&quot;).ToString]" DisplayName="Invoke VBA - CreateAndFormatPivotTable" EntryMethodName="[in_Config(&quot;vbaCreateAndFormatPivotTable&quot;).ToString]" EntryMethodParameters="[{in_Config(&quot;invoiceDataSheetName&quot;).ToString}]" sap:VirtualizedContainerService.HintSize="1164.8,120" sap2010:WorkflowViewState.IdRef="InvokeVBA_1" />
+            <ui:ExcelReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtPivotDataOutput]" DisplayName="Read Range - Pivot Data Output" sap:VirtualizedContainerService.HintSize="1164.8,92" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="[in_Config(&quot;invoicePivotDataOutputSheetName&quot;).ToString]" />
+            <If Condition="[in_dtInvoiceFilteredOnFee.AsEnumerable.Any(function(x) x(&quot;Quantity&quot;).ToString = dtPivotDataOutput.rows.Count.ToString) = true]" DisplayName="If count of rows in Pivot Data Output matches any of the Quntities for Invoice" sap:VirtualizedContainerService.HintSize="1164.8,1177.6" sap2010:WorkflowViewState.IdRef="If_2">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -196,15 +196,15 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <If.Then>
-                <Sequence sap:VirtualizedContainerService.HintSize="1131.2,963.2" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                <Sequence DisplayName="Sequence" sap:VirtualizedContainerService.HintSize="1121.6,924.8" sap2010:WorkflowViewState.IdRef="Sequence_6">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <TryCatch DisplayName="Try - Overwrite values from column Total with occurring fee" sap:VirtualizedContainerService.HintSize="1088,396" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                  <TryCatch DisplayName="Try - Overwrite values from column Total with occurring fee" sap:VirtualizedContainerService.HintSize="1088,427.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                     <TryCatch.Try>
-                      <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_dtModifiedFee = New DataTable&#xA;out_dtModifiedFee = in_dtPivotDataOutput.Copy&#xA;For Each row As datarow In out_dtModifiedFee.Rows&#xA;&#x9;row(&quot;Total&quot;) = in_StrOccurringFee&#xA;Next&#xA;" DisplayName="Overwrite values from column Total with occurring fee" sap:VirtualizedContainerService.HintSize="333.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
+                      <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_dtModifiedFee = New DataTable&#xA;out_dtModifiedFee = in_dtPivotDataOutput.Copy&#xA;For Each row As datarow In out_dtModifiedFee.Rows&#xA;&#x9;row(&quot;Total&quot;) = in_StrOccurringFee&#xA;Next&#xA;" DisplayName="Overwrite values from column Total with occurring fee" sap:VirtualizedContainerService.HintSize="337.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
                         <ui:InvokeCode.Arguments>
                           <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dtPivotDataOutput">[dtPivotDataOutput]</InArgument>
                           <InArgument x:TypeArguments="x:String" x:Key="in_StrOccurringFee">[in_strOccurringFee]</InArgument>
@@ -248,7 +248,7 @@
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence sap:VirtualizedContainerService.HintSize="300,82.4" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                <Sequence DisplayName="Sequence" sap:VirtualizedContainerService.HintSize="300,82.4" sap2010:WorkflowViewState.IdRef="Sequence_7">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>

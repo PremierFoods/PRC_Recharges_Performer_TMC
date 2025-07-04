@@ -199,18 +199,37 @@ Sub ExcludeSpecificValueInPivot(worksheet as string, excludeList as string, pivo
     Set pf = pt.PivotFields(pivotField)
 
 'MsgBox "Field '" & pf & "' found in PivotTable '" & pt & "'."
+' Loop through each item in the pivot field
+For Each pi In pf.PivotItems
+    pi.Visible = True ' Ensure item is visible initially if it was previously hidden
+    For j = LBound(Split(excludeList, ",")) To UBound(Split(excludeList, ","))
+        If pi.Name = Split(excludeList, ",")(j) Then
+            'MsgBox "Exclude "" & pi.Name & "" from PivotTable "" & pt & ""."
 
-    ' Loop through each item in the pivot field
-    For Each pi In pf.PivotItems
-        pi.Visible = True
-        For j = LBound(split(excludeList,",")) To UBound(split(excludeList,","))
-            If pi.Name = split(excludeList,",")(j) Then
-		'MsgBox "Exclude '" & pi.Name & "' from PivotTable '" & pt & "'."
+        
+            ' Count the number of visible items in the current pivot field
+            Dim visibleItemsCount As Long
+            visibleItemsCount = 0
+            For Each item In pf.PivotItems
+                If item.Visible = True Then
+                    visibleItemsCount = visibleItemsCount + 1
+                End If
+            Next item
+
+            ' Only set pi.Visible = False if it's not the last visible item
+            If visibleItemsCount > 1 Then
                 pi.Visible = False
-                Exit For
+            Else
+                ' Optionally, you can add a message here to indicate that
+                ' this item cannot be hidden because it's the last one.
+                ' MsgBox "Cannot hide " & pi.Name & " as it is the last visible item in the field."
             End If
-        Next j
-    Next pi
+            ' *** MODIFICATION ENDS HERE ***
+
+            Exit For ' Exit the inner loop (j) once a match is found
+        End If
+    Next j
+Next pi
 End Sub
 
 Sub SetPivotTableRange(worksheet as string, lastRow as Long)
