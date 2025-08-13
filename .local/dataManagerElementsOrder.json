@@ -230,6 +230,7 @@
       "Path": "test.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "in_strPDFInvoice&Sequence_1",
         "intMonthNo&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [],

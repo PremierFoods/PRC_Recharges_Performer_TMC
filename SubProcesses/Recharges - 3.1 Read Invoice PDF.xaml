@@ -164,12 +164,13 @@
       <AssemblyReference>System.Diagnostics.TraceSource</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read PDF invoice&#xA;2. Create invoice table&#xA;3. Extract data from pdf and add to invoice table&#xA;4. Open PDF invoice&#xA;5. Take screenshot&#xA;6. Paste screenshot into San Dnl + Invoices tab from TMC template&#xA;" DisplayName="Recharges - 3.1 Read Invoice PDF" sap:VirtualizedContainerService.HintSize="1004.8000000000001,2033.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Steps done in this workflow:&#xA;1. Read PDF invoice&#xA;2. Create invoice table&#xA;3. Extract data from pdf and add to invoice table&#xA;4. Open PDF invoice&#xA;5. Take screenshot&#xA;6. Paste screenshot into San Dnl + Invoices tab from TMC template&#xA;" DisplayName="Recharges - 3.1 Read Invoice PDF" sap:VirtualizedContainerService.HintSize="1106.4,2916.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="strInvoice" />
       <Variable x:TypeArguments="ui:Image" Name="screenshot" />
       <Variable x:TypeArguments="sd1:Process" Name="startProcess" />
       <Variable x:TypeArguments="x:Boolean" Name="boolPopUp" />
+      <Variable x:TypeArguments="x:Boolean" Name="boolInvoiceOpened" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -211,6 +212,54 @@
       </TryCatch.Catches>
     </TryCatch>
     <ui:StartProcess Arguments="{x:Null}" WorkingDirectory="{x:Null}" DisplayName="Start Process" FileName="[in_strPDFInvoice]" sap:VirtualizedContainerService.HintSize="449.6,120" sap2010:WorkflowViewState.IdRef="StartProcess_4" />
+    <Delay Duration="00:01:00" sap:VirtualizedContainerService.HintSize="449.6,122.4" sap2010:WorkflowViewState.IdRef="Delay_1" />
+    <ui:UiElementExists DisplayName="Element Exists 'Chrome_RenderWidgetHost...'" Exists="[boolInvoiceOpened]" sap:VirtualizedContainerService.HintSize="449.6,139.2" sap2010:WorkflowViewState.IdRef="UiElementExists_5">
+      <ui:UiElementExists.Target>
+        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="1da8a236-9608-45c5-bc74-39b5fec934b7" InformativeScreenshot="3a16040f40aa93207f5edff7a016a3a4" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Invoice_*' /&gt;">
+          <ui:Target.TimeoutMS>
+            <InArgument x:TypeArguments="x:Int32" />
+          </ui:Target.TimeoutMS>
+          <ui:Target.WaitForReady>
+            <InArgument x:TypeArguments="ui:WaitForReady" />
+          </ui:Target.WaitForReady>
+        </ui:Target>
+      </ui:UiElementExists.Target>
+    </ui:UiElementExists>
+    <If Condition="[boolInvoiceOpened]" sap:VirtualizedContainerService.HintSize="449.6,906.4" sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,510.4" sap2010:WorkflowViewState.IdRef="Sequence_26">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="382.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Invoice successfully opened in browser!&quot;]" />
+          <ui:TakeScreenshot DisplayName="Take Screenshot - PDF invoice" sap:VirtualizedContainerService.HintSize="382.4,118.4" sap2010:WorkflowViewState.IdRef="TakeScreenshot_2" Screenshot="[screenshot]" WaitBefore="10000">
+            <ui:TakeScreenshot.Target>
+              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="8ffd2612-abfe-4104-aeda-5cac75686c6f">
+                <ui:Target.TimeoutMS>
+                  <InArgument x:TypeArguments="x:Int32" />
+                </ui:Target.TimeoutMS>
+                <ui:Target.WaitForReady>
+                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                </ui:Target.WaitForReady>
+              </ui:Target>
+            </ui:TakeScreenshot.Target>
+          </ui:TakeScreenshot>
+          <ui:SaveImage DisplayName="Save Image of exchange rate table" FileName="[in_Config(&quot;Recharges_SaveScreenshotLocation&quot;).ToString]" sap:VirtualizedContainerService.HintSize="382.4,157.6" sap2010:WorkflowViewState.IdRef="SaveImage_2" Image="[screenshot]" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,225.6" sap2010:WorkflowViewState.IdRef="Sequence_27">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[&quot;Failed to open the invoice in browser&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
     <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="449.6,84.8" sap2010:WorkflowViewState.IdRef="CommentOut_5">
       <ui:CommentOut.Body>
         <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="416,171.2" sap2010:WorkflowViewState.IdRef="Sequence_25">
@@ -375,19 +424,6 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:CommentOut>
-    <ui:TakeScreenshot DisplayName="Take Screenshot - PDF invoice" sap:VirtualizedContainerService.HintSize="449.6,118.4" sap2010:WorkflowViewState.IdRef="TakeScreenshot_2" Screenshot="[screenshot]" WaitBefore="10000">
-      <ui:TakeScreenshot.Target>
-        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="8ffd2612-abfe-4104-aeda-5cac75686c6f">
-          <ui:Target.TimeoutMS>
-            <InArgument x:TypeArguments="x:Int32" />
-          </ui:Target.TimeoutMS>
-          <ui:Target.WaitForReady>
-            <InArgument x:TypeArguments="ui:WaitForReady" />
-          </ui:Target.WaitForReady>
-        </ui:Target>
-      </ui:TakeScreenshot.Target>
-    </ui:TakeScreenshot>
-    <ui:SaveImage DisplayName="Save Image of exchange rate table" FileName="[in_Config(&quot;Recharges_SaveScreenshotLocation&quot;).ToString]" sap:VirtualizedContainerService.HintSize="449.6,166.4" sap2010:WorkflowViewState.IdRef="SaveImage_2" Image="[screenshot]" />
     <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope - Vodafone usage" sap:VirtualizedContainerService.HintSize="449.6,312.8" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" SensitivityOperation="None" WorkbookPath="[in_strTemplatePath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
